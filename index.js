@@ -1,8 +1,9 @@
 import express from  "express"
 import cors from  "cors"
 import path from "path"
+import mongoose from "mongoose";
 import dotenv from "dotenv"
-import {router} from "./backend/routes/index.js"
+import { router } from "./backend/routes/index.js"
 
 dotenv.config();
 const app = express();
@@ -17,7 +18,13 @@ app.set("views", path.resolve(__dirname, "frontend", "pages"));
 app.use(express.static(path.resolve(__dirname, "frontend", "static")));
 
 app.use(function (req, res) {
-    res.status(404).render("404");
+    res.status(404).render("404", {
+        title: "Ошибка",
+        resources: {
+            css: [],
+            js: []
+        }
+    });
 });
 
 
@@ -25,6 +32,7 @@ const PORT = process.env.PORT;
 
 async function start() {
     try {
+        await mongoose.connect(process.env.mongo)
         app.listen(PORT, () =>
             console.log(`SERVER HAS BEEN STARTED AT ${PORT}`)
         );
@@ -32,5 +40,7 @@ async function start() {
         console.log(e.message);
     }
 }
+
+
 
 await start()
