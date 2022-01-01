@@ -2,20 +2,19 @@ import pkg from "mongoose"
 
 const { Schema, model } = pkg
 
-const schemaUser = new Schema({
-    login: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    password: {
+const schema_text = new Schema({
+    page: {
         type: String,
         required: true
     },
-    roles: [{
+    name: {
         type: String,
-        ref: "Role"
-    }],
-});
+        required: true
+    },
+    value: {
+        type: String,
+        required: true
+    }
+})
 
-export const User = model("User", schemaUser);
+export const Text = model("Text", schema_text)
