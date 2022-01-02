@@ -31,6 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
             const res = await login.json()
             document.cookie = `token=${res.token}; path=/`
             clear_inputs()
+            window.location.reload()
         } catch (e) {
             console.log(e)
         }

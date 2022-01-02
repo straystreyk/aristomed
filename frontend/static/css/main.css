@@ -72,6 +72,15 @@ body {
     padding: 0;
 }
 
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.bold_text {
+    font-weight: 600;
+}
+
 .container {
     max-width: 1300px;
     margin: 0 auto;

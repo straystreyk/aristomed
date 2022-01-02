@@ -14,9 +14,17 @@
 
 <header>
     <div class="container">
-        <div class="header-wrapper">
+        <div class="header_wrapper">
             <div class="logo">
-                HEADER
+                logo
+            </div>
+            <div>
+                <%if(user) {%>
+                Здравствуйте, <%=user.name ? user.name : ""%>
+                <button class="exit_account">
+                    Выйти
+                </button>
+                <%}%>
             </div>
         </div>
     </div>

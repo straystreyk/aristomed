@@ -1,18 +1,41 @@
 window.addEventListener("DOMContentLoaded", () => {
     const editble = document.querySelectorAll(".editble");
     const popup = document.createElement("div");
+    const popup_wrapper = document.createElement("div");
     const edit_area = document.createElement("textarea");
-    const editBtn = document.createElement("button");
-    editBtn.classList.add("editBtn")
+    const buttons = document.createElement("div");
+    const example = document.createElement("div");
+    const example_wrapper = document.createElement("div");
+    const weight_btn = document.createElement("button");
+    const p_btn = document.createElement("button");
+    const edit_btn = document.createElement("button");
+
+    buttons.classList.add("buttons")
+    weight_btn.classList.add("weight_btn")
+    p_btn.classList.add("p_btn")
+    edit_btn.classList.add("edit_btn")
     edit_area.classList.add("edit_area")
+    example.classList.add("example")
+    example_wrapper.classList.add("example_wrapper")
     popup.classList.add("text_update_popup")
-    editBtn.innerText = "edit"
-    popup.append(edit_area)
-    popup.append(editBtn)
+    popup_wrapper.classList.add("popup_wrapper")
+    edit_btn.innerText = "Изменить"
+    weight_btn.innerText = "Жирный шрифт"
+    p_btn.innerText = "С новой строки"
+    buttons.append(weight_btn)
+    buttons.append(p_btn)
+    example_wrapper.append(edit_area)
+    example_wrapper.append(example)
+    popup_wrapper.append(buttons)
+    popup_wrapper.append(example_wrapper)
+    popup_wrapper.append(edit_btn)
+    popup.append(popup_wrapper)
+
     document.body.append(popup)
 
     const edit = (el) => {
         edit_area.value = el.innerHTML
+        example.innerHTML = edit_area.value
         edit_area.dataset.name = el.dataset.name
         edit_area.dataset.page = el.dataset.page
     }
@@ -28,11 +51,13 @@ window.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify({
                     name: edit_area.dataset.name,
                     value: edit_area.value,
-                    page: edit_area.dataset.page
+                    page: edit_area.dataset.page,
+                    location: window.location.href
                 })
             });
 
             const res = await update_text.json()
+            window.location.reload()
             popup.classList.remove("active")
             edit_area.dataset.name = ""
             edit_area.dataset.page = ""
@@ -42,7 +67,8 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    editBtn.addEventListener("click", accept)
+    edit_btn.addEventListener("click", accept)
+
     popup.addEventListener("click", (e) => {
         if (e.target.classList.contains("active")) {
             e.target.classList.remove("active")
@@ -50,15 +76,31 @@ window.addEventListener("DOMContentLoaded", () => {
     })
 
     editble.forEach((el) => {
-        el.addEventListener("mouseover", () => {
-            el.style.border = "2px solid red"
-        })
-        el.addEventListener("mouseout", () => {
-            el.style.border = ""
-        })
+        el.classList.add("editble_active")
         el.addEventListener("dblclick", () => {
             popup.classList.add("active")
             edit(el)
         })
     })
+
+    edit_area.addEventListener("input", () => {
+        console.log('as')
+        example.innerHTML = edit_area.value
+    })
+
+    //работа с попапом
+    const matcher = (left_tag, right_tag) => {
+        let current = edit_area.value.slice(edit_area.selectionStart, edit_area.selectionEnd);
+        if (current.includes(left_tag) && current.includes(right_tag)) {
+            current = current.slice(left_tag.length, current.length - right_tag.length);
+        } else {
+            current = left_tag + current.substring(0, current.length) + right_tag
+        }
+        edit_area.value = edit_area.value.slice(0, edit_area.selectionStart)
+            + current + edit_area.value.slice(edit_area.selectionEnd, edit_area.value.length)
+        example.innerHTML = edit_area.value
+    }
+
+    weight_btn.addEventListener("click", () => matcher("<b>", "</b>"))
+    p_btn.addEventListener("click", () => matcher("<p>", "</p>"))
 })

@@ -2,9 +2,11 @@ import {Router} from "express";
 import {Controllers} from "../controllers/controllers.js";
 import {check} from "express-validator";
 import {check_role} from "../middewares/middlewares.js";
+import {Doctor} from "../models/Doctor.js";
 
 const { login, registration, get_texts, update_text } = Controllers
-let isAdmin
+let isAdmin = false
+let user = false
 
 export const router = Router();
 router.use(check_role)
@@ -15,29 +17,33 @@ router.get("/", async (req, res) => {
     const js = []
     const css = []
 
+    user = req.user ? req.user : false
     if (req.user && req.user.roles.includes("ADMIN") ) {
         isAdmin = true
         js.push("/js/admin.js")
         css.push("/css/admin.css")
-    } else {
-        isAdmin = false
     }
 
     res.render("main-page", {
         title: "Главная страница",
         resources: {css, js},
         text,
-        isAdmin
+        isAdmin,
+        user
     })
 })
 
 router.get("/admin/auth", (req, res) => {
+    if (req.user) return res.redirect("/")
+    
     res.render("auth-admin", {
         title: "admin",
         resources: {
             css: ["/css/auth.css"],
             js: ["/js/auth.js"],
-        }
+        },
+        isAdmin,
+        user
     })
 })
 

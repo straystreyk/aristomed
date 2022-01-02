@@ -40,7 +40,7 @@ export const login = async (req, res) => {
         if (!valid_password) {
             return res.status(400).json({message: "Неправильный пароль"})
         }
-        const token = generate_access_token(user.id, user.roles)
+        const token = generate_access_token(user.id, user.roles, user.name)
         return res.json({token})
     } catch (e) {
         console.log(e)
@@ -48,10 +48,11 @@ export const login = async (req, res) => {
     }
 }
 
-const generate_access_token = (id, roles) => {
+const generate_access_token = (id, roles, name) => {
     const payload = {
         id,
-        roles
+        roles,
+        name
     }
     return jwt.sign(payload, process.env.SECRET_JWT, {expiresIn: "24h"})
 }

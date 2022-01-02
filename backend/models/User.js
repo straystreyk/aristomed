@@ -12,6 +12,10 @@ const schemaUser = new Schema({
         type: String,
         required: true
     },
+    name: {
+        type: String,
+        required: true
+    },
     roles: [{
         type: String,
         ref: "Role"
