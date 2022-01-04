@@ -1,13 +1,13 @@
-import pkg from "mongoose"
+import pkg from "mongoose";
 
-const { Schema, model } = pkg
+const { Schema, model } = pkg;
 
 const schemaRole = new Schema({
-    value: {
-        type: String,
-        unique: true,
-        default: "USER"
-    }
-})
+  value: {
+    type: String,
+    unique: true,
+    default: "USER",
+  },
+});
 
-export const Role = model("Role", schemaRole)
+export const Role = model("Role", schemaRole);

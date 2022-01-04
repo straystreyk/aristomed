@@ -1,53 +1,52 @@
-import {Router} from "express";
-import {Controllers} from "../controllers/controllers.js";
-import {check} from "express-validator";
-import {check_role} from "../middewares/middlewares.js";
+import { Router } from "express";
+import { Controllers } from "../controllers/controllers.js";
+import { check } from "express-validator";
+import { check_role } from "../middewares/middlewares.js";
 
-const { login, registration, get_texts, update_text, cacheControl, getAll } = Controllers
-let isAdmin = false
-export let user = false
+const { login, registration, get_texts, update_text, cacheControl, getAll } =
+  Controllers;
+let isAdmin = false;
+export let user = false;
 export const router = Router();
 
-router.use(check_role)
-router.use(cacheControl)
+router.use(check_role);
+router.use(cacheControl);
 
 //-----PAGES------
 router.get("/", async (req, res) => {
-    const text = await get_texts("main")
-    const js = []
-    const css = []
+  const text = await get_texts("main");
+  const js = [];
+  const css = [];
 
-    user = req.user ? req.user : false
-    if (req.user && req.user.roles.includes("ADMIN") ) {
-        isAdmin = true
-        js.push("/js/admin.js")
-        css.push("/css/admin.css")
-    }
+  user = req.user ? req.user : false;
+  if (req.user && req.user.roles.includes("ADMIN")) {
+    isAdmin = true;
+    js.push("/js/admin.js");
+    css.push("/css/admin.css");
+  }
 
-    res.render("main-page", {
-        title: "Главная страница",
-        resources: {css, js},
-        text,
-        isAdmin,
-        user
-    })
-})
+  res.render("main-page", {
+    title: "Главная страница",
+    resources: { css, js },
+    text,
+    isAdmin,
+    user,
+  });
+});
 
 router.get("/admin/auth", (req, res) => {
-    if (req.user) return res.redirect("/")
+  if (req.user) return res.redirect("/");
 
-    res.render("auth-admin", {
-        title: "admin",
-        resources: {
-            css: ["/css/auth.css"],
-            js: ["/js/auth.js"],
-        },
-        isAdmin,
-        user
-    })
-})
-
-
+  res.render("auth-admin", {
+    title: "admin",
+    resources: {
+      css: ["/css/auth.css"],
+      js: ["/js/auth.js"],
+    },
+    isAdmin,
+    user,
+  });
+});
 
 //------------API---------------
 
@@ -59,11 +58,15 @@ router.get("/admin/auth", (req, res) => {
 // })
 
 //Text
-router.post("/text_update", update_text)
+router.post("/text_update", update_text);
 
 //Admin
-router.post("/admin/auth/login", login)
-router.post("/admin/auth/registration", [
+router.post("/admin/auth/login", login);
+router.post(
+  "/admin/auth/registration",
+  [
     check("login", "Имя пользователя не может быть пустым").notEmpty(),
-    check("password", "Пароль должен быть больше 4").isLength({min: 4})
-], registration)
+    check("password", "Пароль должен быть больше 4").isLength({ min: 4 }),
+  ],
+  registration
+);

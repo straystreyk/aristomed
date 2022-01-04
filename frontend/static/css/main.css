@@ -1,70 +1,84 @@
 /* fonts */
 @font-face {
-    font-family: 'NEXT ART';
-    src: local('NEXT ART SemiBold'), local('NEXTART-SemiBold'), url('../fonts/Nextart/Nextartsemibold.woff2') format('woff2'), url('../fonts/Nextart/Nextartsemibold.woff') format('woff');
-    font-weight: 600;
-    font-style: normal;
-    font-display: fallback;
+  font-family: "NEXT ART";
+  src: local("NEXT ART SemiBold"), local("NEXTART-SemiBold"),
+    url("../fonts/Nextart/Nextartsemibold.woff2") format("woff2"),
+    url("../fonts/Nextart/Nextartsemibold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: fallback;
 }
+
 @font-face {
-    font-family: 'NEXT ART';
-    src: local('NEXT ART Light'), local('NEXTART-Light'), url('../fonts/Nextart/Nextartlight.woff2') format('woff2'), url('../fonts/Nextart/Nextartlight.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-    font-display: fallback;
+  font-family: "NEXT ART";
+  src: local("NEXT ART Light"), local("NEXTART-Light"),
+    url("../fonts/Nextart/Nextartlight.woff2") format("woff2"),
+    url("../fonts/Nextart/Nextartlight.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: fallback;
 }
+
 @font-face {
-    font-family: 'NEXT ART';
-    src: local('NEXT ART'), local('NEXTART'), url('../fonts/Nextart/Nextart.woff2') format('woff2'), url('../fonts/Nextart/Nextart.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: fallback;
+  font-family: "NEXT ART";
+  src: local("NEXT ART"), local("NEXTART"),
+    url("../fonts/Nextart/Nextart.woff2") format("woff2"),
+    url("../fonts/Nextart/Nextart.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: fallback;
 }
+
 @font-face {
-    font-family: 'NEXT ART';
-    src: local('NEXT ART Heavy'), local('NEXTART-Heavy'), url('../fonts/Nextart/Nextartheavy.woff2') format('woff2'), url('../fonts/Nextart/Nextartheavy.woff') format('woff');
-    font-weight: 900;
-    font-style: normal;
-    font-display: fallback;
+  font-family: "NEXT ART";
+  src: local("NEXT ART Heavy"), local("NEXTART-Heavy"),
+    url("../fonts/Nextart/Nextartheavy.woff2") format("woff2"),
+    url("../fonts/Nextart/Nextartheavy.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: fallback;
 }
+
 @font-face {
-    font-family: 'NEXT ART';
-    src: local('NEXT ART Bold'), local('NEXTART-Bold'), url('../fonts/Nextart/Nextartbold.woff2') format('woff2'), url('../fonts/Nextart/Nextartbold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-    font-display: fallback;
+  font-family: "NEXT ART";
+  src: local("NEXT ART Bold"), local("NEXTART-Bold"),
+    url("../fonts/Nextart/Nextartbold.woff2") format("woff2"),
+    url("../fonts/Nextart/Nextartbold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: fallback;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
 }
 
 p {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .bold_text {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .container {
-    max-width: 1300px;
-    margin: 0 auto;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
-html, body {
-    min-height: 100vh;
+html,
+body {
+  min-height: 100vh;
 }
 
 main {
-    flex: 1 0 auto;
+  flex: 1 0 auto;
 }
-
