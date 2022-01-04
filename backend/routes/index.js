@@ -2,16 +2,16 @@ import {Router} from "express";
 import {Controllers} from "../controllers/controllers.js";
 import {check} from "express-validator";
 import {check_role} from "../middewares/middlewares.js";
-import {Doctor} from "../models/Doctor.js";
 
-const { login, registration, get_texts, update_text } = Controllers
+const { login, registration, get_texts, update_text, cacheControl, getAll } = Controllers
 let isAdmin = false
-let user = false
-
+export let user = false
 export const router = Router();
-router.use(check_role)
 
-//GET
+router.use(check_role)
+router.use(cacheControl)
+
+//-----PAGES------
 router.get("/", async (req, res) => {
     const text = await get_texts("main")
     const js = []
@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 
 router.get("/admin/auth", (req, res) => {
     if (req.user) return res.redirect("/")
-    
+
     res.render("auth-admin", {
         title: "admin",
         resources: {
@@ -47,7 +47,16 @@ router.get("/admin/auth", (req, res) => {
     })
 })
 
-//API
+
+
+//------------API---------------
+
+//Search
+// router.post("/search", async (req, res) => {
+//     const data = await getAll(req.body.value)
+//
+//     res.json(data)
+// })
 
 //Text
 router.post("/text_update", update_text)

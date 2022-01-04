@@ -1,5 +1,6 @@
-import {registration, login} from "./auth-controllers.js";
-import {get_texts, update_text} from "./text-controllers.js";
+import { registration, login } from "./auth-controllers.js";
+import { get_texts, update_text } from "./text-controllers.js";
+import { getAll } from "./search-controller.js"
 
 const cacheControl = (req, res, next) => {
     res.set("Cache-control", "no-store");
@@ -11,5 +12,6 @@ export const Controllers = {
     login,
     get_texts,
     update_text,
-    cacheControl
+    cacheControl,
+    getAll
 }

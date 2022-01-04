@@ -5,6 +5,7 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
+    overflow: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,9 +30,8 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    min-width: 400px;
-    height: 200px;
     opacity: 0;
+    max-width: 100vw;
     transform: translateY(-30px);
     border-radius: 15px;
     padding: 30px;
@@ -47,13 +47,19 @@
     border: 1px solid lime;
     font-size: 16px;
     border-radius: 5px;
+    max-width: 90vw;
     font-family: 'Montserrat', sans-serif;
+    min-width: 800px;
+    min-height: 400px;
+    padding: 10px;
+    margin-top: 10px;
 }
 
 .edit_btn {
     background: none;
     font-size: 15px;
     font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
     padding: 8px 12px;
     cursor: pointer;
     margin-top: 15px;

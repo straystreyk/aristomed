@@ -1,9 +1,10 @@
 import {validationResult} from "express-validator";
-import {User} from "../models/User.js";
 import bcrypt from "bcryptjs";
-import {Role} from "../models/Role.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv"
+
+import {Role} from "../models/Role.js";
+import {User} from "../models/User.js";
 
 dotenv.config()
 
@@ -56,3 +57,4 @@ const generate_access_token = (id, roles, name) => {
     }
     return jwt.sign(payload, process.env.SECRET_JWT, {expiresIn: "24h"})
 }
+

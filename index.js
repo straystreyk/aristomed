@@ -4,6 +4,8 @@ import path from "path"
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv"
+
+import { user } from "./backend/routes/index.js";
 import { router } from "./backend/routes/index.js"
 
 dotenv.config();
@@ -25,24 +27,24 @@ app.use(async function (req, res) {
         resources: {
             css: [],
             js: []
-        }
+        },
+        user
     });
 });
 
 
-const PORT = process.env.PORT;
 
 async function start() {
     try {
-        await mongoose.connect(process.env.mongo)
-        app.listen(PORT, () =>
-            console.log(`SERVER HAS BEEN STARTED AT ${PORT}`)
+        await mongoose.connect(process.env.DB_CONNECTION_STRING)
+        
+        app.listen(process.env.APP_PORT, process.env.APP_IP, () =>
+            console.log(`SERVER HAS BEEN STARTED AT ${process.env.APP_PORT}`)
         );
     } catch (e) {
         console.log(e.message);
     }
 }
-
 
 
 await start()
