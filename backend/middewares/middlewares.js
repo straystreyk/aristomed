@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 export const check_role = (req, res, next) => {
   try {
-    if (req.cookies.token) {
-      const token = req.cookies.token;
+    const token = req.cookies.token;
+    if (token) {
       if (!token)
         return res
           .status(403)
@@ -11,6 +11,9 @@ export const check_role = (req, res, next) => {
       req.user = decodedData;
     }
   } catch (e) {
+    if (e.message === "jwt expired") {
+      const token = req.cookies.token
+    }
     console.log(e.message);
   }
   next();

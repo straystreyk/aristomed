@@ -2,6 +2,7 @@ import { Router } from "express";
 import { Controllers } from "../controllers/controllers.js";
 import { check } from "express-validator";
 import { check_role } from "../middewares/middlewares.js";
+import {get_all_doctors} from "../controllers/get-controllers.js";
 
 const { login, registration, get_texts, update_text, cacheControl, getAll } =
   Controllers;
@@ -31,6 +32,27 @@ router.get("/", async (req, res) => {
     text,
     isAdmin,
     user,
+  });
+});
+
+router.get("/doctors", async (req, res) => {
+  const doctors = await get_all_doctors()
+  const js = ["/js/doctors.js"];
+  const css = ["/css/doctors.css"];
+
+  user = req.user ? req.user : false;
+  if (req.user && req.user.roles.includes("ADMIN")) {
+    isAdmin = true;
+    js.push("/js/admin.js");
+    css.push("/css/admin.css");
+  }
+
+  res.render("doctors-page", {
+    title: "doctors",
+    resources: { css, js },
+    isAdmin,
+    user,
+    doctors
   });
 });
 

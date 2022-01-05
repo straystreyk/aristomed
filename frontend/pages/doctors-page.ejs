@@ -1,0 +1,9 @@
+<%- include('../components/header') %>
+<div class="container">
+    <%if (doctors) {%>
+        <%doctors.forEach(el => {%>
+            <div><%=el.name%></div>
+        <%})%>
+    <%}%>
+</div>
+<%- include('../components/footer') %>

@@ -1,4 +1,5 @@
 window.addEventListener("DOMContentLoaded", () => {
+  document.body.style.opacity = "1";
   const exit_btn = document.querySelector(".exit_account");
 
   if (exit_btn) {
