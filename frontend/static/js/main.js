@@ -1,5 +1,7 @@
+import { observer } from "../plugins/instersection.js";
+
 window.addEventListener("DOMContentLoaded", () => {
-  document.body.style.opacity = "1";
+  document.body.style.opacity = "1"
   const exit_btn = document.querySelector(".exit_account");
 
   if (exit_btn) {
@@ -8,6 +10,12 @@ window.addEventListener("DOMContentLoaded", () => {
       window.location.reload();
     });
   }
+
+  //intersection
+  const all_images = document.querySelectorAll("img");
+  all_images.forEach((i) => {
+    observer.observe(i);
+  });
 
   // const search_input = document.querySelector(".main_search_input");
 

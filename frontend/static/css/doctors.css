@@ -1,0 +1,45 @@
+.doctors_wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+img {
+    min-height: 300px;
+    font-size: 0;
+    object-fit: contain;
+    background: #c4c4c4;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+img.active {
+    animation-play-state: paused;
+    background: transparent;
+}
+
+img.active:before {
+    display: none;
+}
+
+img:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    width: 80%;
+    height: 100%;
+    animation: 1s flare ease-in infinite;
+    transform: skewX(-55deg) translateX(-100%);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4));
+}
+
+@keyframes flare {
+    0% {
+        left: -150%;
+    }
+    100% {
+        left: 200%;
+    }
+}

@@ -59,7 +59,7 @@ body {
   margin: 0;
   padding: 0;
   opacity: 0;
-  transition: 0.35s all ease-in;
+  transition: 0.3s opacity ease;
 }
 
 p {

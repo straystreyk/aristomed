@@ -1,9 +1,16 @@
 <%- include('../components/header') %>
 <div class="container">
-    <%if (doctors) {%>
-        <%doctors.forEach(el => {%>
-            <div><%=el.name%></div>
-        <%})%>
-    <%}%>
+    <div class="doctors_wrapper">
+        <%if (doctors) {%>
+            <%doctors.forEach(el => {%>
+                <div class="doctor">
+                    <div><%=el.name%></div>
+                    <img class="animate_image" src="" data-src="<%=el.image%>" />
+                </div>
+            <%})%>
+        <%} else {%>
+            Нет докторов(
+        <%}%>
+    </div>
 </div>
 <%- include('../components/footer') %>
