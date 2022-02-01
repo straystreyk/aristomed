@@ -32,8 +32,12 @@
   margin-right: 44px;
 }
 
-.header_nav ul li a {
+.header_nav > ul li a {
   font-weight: 700;
+}
+
+.header_nav > ul li a.active {
+  color: var(--main_color);
 }
 
 .burger {

@@ -76,13 +76,13 @@ const links = [
             <nav class="header_nav">
                 <ul>
                     <li>
-                        <a href="/services">Услуги и цены</a>
+                        <a class="<% if(linkActive === "/services") {%> active <%}%>" href="/services">Услуги и цены</a>
                     </li>
                     <li>
-                        <a href="/doctors">Врачи</a>
+                        <a class="<% if(linkActive === "/doctors") {%> active <%}%>" href="/doctors">Врачи</a>
                     </li>
                     <li>
-                        <a href="/online">Онлайн-прием</a>
+                        <a class="<% if(linkActive === "/online") {%> active <%}%>" href="/online">Онлайн-прием</a>
                     </li>
                 </ul>
                 <div class="burger">
@@ -112,7 +112,7 @@ const links = [
             <section class="greetings_section">
                 <h1 class="editble" data-page="main" data-name="GreetingsBlock"><%- pageText.GreetingsBlock %></h1>
                 <p class="editble" data-page="main" data-name="GreetingsBlockText"><%- pageText.GreetingsBlockText %></p>
-                <a href="#" class="button rounded greetings_button">Записаться на прием</a>
+                <a href="https://klientiks.ru/app2/ARISTOMED" class="button rounded greetings_button">Записаться на прием</a>
             </section>
         <%}%>
     </div>
