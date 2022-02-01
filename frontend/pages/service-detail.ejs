@@ -1,0 +1,11 @@
+<%- include('../components/header') %>
+<%- include('../components/fixed-socials') %>
+<div class="container">
+    <%allServices.forEach(el => {%>
+    <div>
+        <%=el.description%>
+        <%=el.price%>
+    </div>
+    <%})%>
+</div>
+<%- include('../components/footer') %>

@@ -2,9 +2,9 @@ import { Router } from "express";
 import { Controllers } from "../controllers/controllers.js";
 import { check } from "express-validator";
 import { check_role } from "../middewares/middlewares.js";
-import { get_all_doctors } from "../controllers/get-controllers.js";
+import { get_all, get_one } from "../controllers/get-controllers.js";
 
-const { login, registration, get_texts, update_text, cacheControl, getAll } =
+const { login, registration, get_texts, update_text, cacheControl, test } =
   Controllers;
 let isAdmin = false;
 export let user = false;
@@ -42,7 +42,8 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/doctors", async (req, res) => {
-  const doctors = await get_all_doctors();
+  const headerText = await get_texts("header");
+  const footer = await get_texts("footer");
   const js = ["/js/doctors.js"];
   const css = ["/css/doctors.css"];
 
@@ -58,7 +59,71 @@ router.get("/doctors", async (req, res) => {
     resources: { css, js },
     isAdmin,
     user,
-    doctors,
+    linkActive: "/doctors",
+    headerText,
+    footer,
+  });
+});
+
+router.get("/services", async (req, res) => {
+  const headerText = await get_texts("header");
+  const footer = await get_texts("footer");
+  const directions = await get_all("medicine_directions");
+
+  const js = [];
+  const css = ["/css/fixed-socials.css"];
+
+  user = req.user ? req.user : false;
+  if (req.user && req.user.roles.includes("ADMIN")) {
+    isAdmin = true;
+    js.push("/js/admin.js");
+    css.push("/css/admin.css");
+  }
+
+  res.render("services", {
+    title: "Услуги и цены",
+    resources: { css, js },
+    isAdmin,
+    user,
+    linkActive: "/services",
+    headerText,
+    footer,
+    directions,
+  });
+});
+
+router.get("/services/:urlName", async (req, res) => {
+  const headerText = await get_texts("header");
+  const footer = await get_texts("footer");
+  const current = await get_one(
+    { urlName: req.params.urlName },
+    "medicine_directions"
+  );
+  const allServices = [];
+  for (let k in current.services) {
+    const service = await get_one({ _id: current.services[k] }, "services");
+    allServices.push(service);
+  }
+
+  const js = [];
+  const css = ["/css/fixed-socials.css"];
+
+  user = req.user ? req.user : false;
+  if (req.user && req.user.roles.includes("ADMIN")) {
+    isAdmin = true;
+    js.push("/js/admin.js");
+    css.push("/css/admin.css");
+  }
+
+  res.render("service-detail", {
+    title: "Услуги и цены",
+    resources: { css, js },
+    isAdmin,
+    user,
+    linkActive: "/services",
+    headerText,
+    footer,
+    allServices,
   });
 });
 
@@ -74,7 +139,7 @@ router.get("/admin/auth", async (req, res) => {
       css: ["/css/auth.css"],
       js: ["/js/auth.js"],
     },
-    linkActive: "",
+    linkActive: "/doctors",
     isAdmin,
     headerText,
     footer,
@@ -90,6 +155,9 @@ router.get("/admin/auth", async (req, res) => {
 //
 //     res.json(data)
 // })
+
+//Test
+router.post("/test", test);
 
 //Text
 router.post("/text_update", update_text);
