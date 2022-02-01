@@ -8,22 +8,30 @@ window.addEventListener("DOMContentLoaded", () => {
   const p_btn = document.createElement("button");
   const nbsp_btn = document.createElement("button");
   const edit_btn = document.createElement("button");
+  const a_btn = document.createElement("button");
+  const h1_btn = document.createElement("button");
 
   buttons.classList.add("buttons");
-  weight_btn.classList.add("weight_btn");
-  p_btn.classList.add("p_btn");
-  nbsp_btn.classList.add("p_letter_btn");
-  edit_btn.classList.add("edit_btn");
+  weight_btn.classList.add("weight_btn", "edit_area__button");
+  p_btn.classList.add("p_btn", "edit_area__button");
+  a_btn.classList.add("p_btn", "edit_area__button");
+  h1_btn.classList.add("h1_btn", "edit_area__button");
+  nbsp_btn.classList.add("p_letter_btn", "edit_area__button");
+  edit_btn.classList.add("edit_btn", "edit_area__button");
   edit_area.classList.add("edit_area");
   popup.classList.add("text_update_popup");
   popup_wrapper.classList.add("popup_wrapper");
   edit_btn.innerText = "Изменить";
   weight_btn.innerText = "Жирный шрифт";
   p_btn.innerText = "С новой строки";
+  a_btn.innerText = "Ссылка";
+  h1_btn.innerText = "Заголовок 1";
   nbsp_btn.innerText = "Неразрывный пробел";
   buttons.append(weight_btn);
   buttons.append(p_btn);
+  buttons.append(a_btn);
   buttons.append(nbsp_btn);
+  buttons.append(h1_btn);
   popup_wrapper.append(buttons);
   popup_wrapper.append(edit_area);
   popup_wrapper.append(edit_btn);
@@ -103,5 +111,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   weight_btn.addEventListener("click", () => matcher("<b>", "</b>"));
   p_btn.addEventListener("click", () => matcher("<p>", "</p>"));
+  h1_btn.addEventListener("click", () => matcher("<h1>", "</h1>"));
   nbsp_btn.addEventListener("click", () => matcher("&nbsp;", ""));
+  a_btn.addEventListener("click", () => matcher("<a href='ссылка'>", "<a>"));
 });

@@ -18,6 +18,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
   auth_form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    const data = get_data();
+    if (!data.login || !data.password) {
+      return;
+    }
+
     try {
       const login = await fetch("/admin/auth/login", {
         method: "post",
@@ -25,7 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(get_data()),
+        body: JSON.stringify(data),
       });
 
       const res = await login.json();

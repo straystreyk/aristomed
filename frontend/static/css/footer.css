@@ -1,0 +1,80 @@
+footer {
+    margin-top: 90px;
+    background-image: url("../images/footerBG.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 46px 0;
+}
+
+.footer_left {
+    color: #fff;
+    max-width: 364px;
+    border-right: 1px solid #fff;
+    padding-right: 120px;
+    padding-top: 50px;
+}
+
+.footer_content {
+    display: flex;
+}
+
+.footer_left p:nth-child(2) {
+    margin-top: 25px;
+}
+
+.footer_left p:last-child {
+    margin-top: 50px;
+    font-weight: 600;
+}
+
+.footer_right {
+    padding-top: 50px;
+    padding-left: 120px;
+    color: #fff;
+}
+
+.footer_contacts {
+    display: flex;
+}
+
+.footer_contacts__tels .tel {
+    display: flex;
+    margin-bottom: 20px;
+}
+.footer_contacts__tels .tel a {
+    margin-left: 17px;
+    color: #fff;
+}
+
+.footer_contacts__other {
+    margin-left: 100px;
+}
+
+.footer_contacts__other .geo {
+    display: flex;
+}
+
+.footer_contacts__other .geo > div {
+    margin-left: 17px;
+}
+
+.footer_contacts__other .mail {
+    display: flex;
+    margin-left: -4px;
+    margin-top: 20px;
+}
+
+.footer_contacts__other .mail > div {
+    margin-left: 15px;
+}
+
+.footer_contacts__other .mail > div a {
+    color: #fff;
+}
+
+.copyright {
+    margin-top: 50px;
+    text-align: right;
+    font-weight: 600;
+}

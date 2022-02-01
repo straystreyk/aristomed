@@ -1,0 +1,21 @@
+.fixed_socials {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 30vh;
+    right: 0;
+}
+
+.fixed_socials .fixed_social {
+    margin-bottom: 13px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.fixed_socials .fixed_social:hover {
+    transform: translateX(-5px);
+}

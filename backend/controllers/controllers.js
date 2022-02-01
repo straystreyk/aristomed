@@ -5,6 +5,8 @@ import { get_all_doctors } from "./get-controllers.js";
 
 const cacheControl = (req, res, next) => {
   res.set("Cache-control", "no-store");
+  res.set("SameSite", "None");
+  res.set("Secure");
   next();
 };
 

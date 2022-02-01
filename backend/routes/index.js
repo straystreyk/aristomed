@@ -2,7 +2,7 @@ import { Router } from "express";
 import { Controllers } from "../controllers/controllers.js";
 import { check } from "express-validator";
 import { check_role } from "../middewares/middlewares.js";
-import {get_all_doctors} from "../controllers/get-controllers.js";
+import { get_all_doctors } from "../controllers/get-controllers.js";
 
 const { login, registration, get_texts, update_text, cacheControl, getAll } =
   Controllers;
@@ -15,9 +15,12 @@ router.use(cacheControl);
 
 //-----PAGES------
 router.get("/", async (req, res) => {
-  const text = await get_texts("main");
-  const js = [];
-  const css = [];
+  const pageText = await get_texts("main");
+  const headerText = await get_texts("header");
+  const footer = await get_texts("footer");
+
+  const js = ["/js/main-page.js"];
+  const css = ["/css/main-page.css", "/css/fixed-socials.css"];
 
   user = req.user ? req.user : false;
   if (req.user && req.user.roles.includes("ADMIN")) {
@@ -28,15 +31,18 @@ router.get("/", async (req, res) => {
 
   res.render("main-page", {
     title: "Главная страница",
+    linkActive: "/",
     resources: { css, js },
-    text,
+    pageText,
+    headerText,
     isAdmin,
+    footer,
     user,
   });
 });
 
 router.get("/doctors", async (req, res) => {
-  const doctors = await get_all_doctors()
+  const doctors = await get_all_doctors();
   const js = ["/js/doctors.js"];
   const css = ["/css/doctors.css"];
 
@@ -52,12 +58,15 @@ router.get("/doctors", async (req, res) => {
     resources: { css, js },
     isAdmin,
     user,
-    doctors
+    doctors,
   });
 });
 
-router.get("/admin/auth", (req, res) => {
+//admin
+router.get("/admin/auth", async (req, res) => {
   if (req.user) return res.redirect("/");
+  const headerText = await get_texts("header");
+  const footer = await get_texts("footer");
 
   res.render("auth-admin", {
     title: "admin",
@@ -65,7 +74,10 @@ router.get("/admin/auth", (req, res) => {
       css: ["/css/auth.css"],
       js: ["/js/auth.js"],
     },
+    linkActive: "",
     isAdmin,
+    headerText,
+    footer,
     user,
   });
 });

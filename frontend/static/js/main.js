@@ -1,8 +1,14 @@
 import { observer } from "../plugins/instersection.js";
 
 window.addEventListener("DOMContentLoaded", () => {
-  document.body.style.opacity = "1"
+  document.body.style.opacity = "1";
+  const burger = document.querySelector(".burger");
+  const sub_menu = document.querySelector(".sub_menu");
   const exit_btn = document.querySelector(".exit_account");
+
+  if (burger)
+    burger.addEventListener("click", () => burger.classList.toggle("active"));
+  if (sub_menu) sub_menu.addEventListener("click", (e) => e.stopPropagation());
 
   if (exit_btn) {
     exit_btn.addEventListener("click", () => {

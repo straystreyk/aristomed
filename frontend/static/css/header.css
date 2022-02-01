@@ -3,3 +3,130 @@
   justify-content: space-between;
   padding: 20px 0;
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-right: 36px;
+}
+
+.logo svg.text {
+  margin-left: 10px;
+}
+
+.left_header {
+  display: flex;
+  align-items: center;
+}
+
+.header_nav {
+  display: flex;
+  align-items: center;
+}
+
+.header_nav ul {
+  display: flex;
+}
+
+.header_nav > ul li {
+  margin-right: 44px;
+}
+
+.header_nav ul li a {
+  font-weight: 700;
+}
+
+.burger {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.burger .line {
+  height: 4px;
+  width: 30px;
+  background: var(--main_color);
+  position: relative;
+  transition: 0.35s all ease;
+}
+
+.burger.active .line {
+  width: 0;
+  background-color: transparent;
+}
+
+.burger .line::before {
+  position: absolute;
+  content: "";
+  top: -10px;
+  left: 0;
+  width: 30px;
+  height: 4px;
+  background: var(--main_color);
+  transition: 0.35s all ease;
+  transform-origin: left;
+}
+
+.burger.active .line:before {
+  transform: rotate(43deg);
+}
+
+.burger .line::after {
+  position: absolute;
+  content: "";
+  top: 10px;
+  left: 0;
+  width: 30px;
+  height: 4px;
+  background: var(--main_color);
+  transition: 0.35s all ease;
+  transform-origin: left;
+}
+
+.burger.active .line:after {
+  transform: rotate(-43deg);
+}
+
+.burger .sub_menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 15px);
+  background-color: #FBFBFB;
+  width: 245px;
+  padding: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.35s all ease;
+}
+
+.burger.active .sub_menu {
+  transform: translateY(0px);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.burger .sub_menu ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.burger .sub_menu li {
+  display: flex;
+}
+
+.burger .sub_menu a {
+  font-weight: 700;
+  padding: 14px 12px;
+  width: 100%;
+}
+
+.burger .sub_menu a.active {
+  background-color: var(--main_color);
+  color: #fff;
+}
