@@ -13,6 +13,7 @@ mongoose.connection.on("open", function () {
   });
 });
 
+//search
 export const getAll = async (value) => {
   let data = [];
 

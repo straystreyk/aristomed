@@ -2,7 +2,7 @@ import pkg from "mongoose";
 
 const { Schema, model } = pkg;
 
-const schema_doctor = new Schema({
+const DoctorSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -17,16 +17,20 @@ const schema_doctor = new Schema({
   },
   experience: {
     type: Number,
+    required: true,
   },
   middle_name: {
     type: String,
+    default: "",
   },
   education: {
     type: String,
+    required: true,
   },
   image: {
     type: String,
+    default: "",
   },
 });
 
-export const Doctor = model("Doctor", schema_doctor);
+export const Doctor = model("Doctor", DoctorSchema);
