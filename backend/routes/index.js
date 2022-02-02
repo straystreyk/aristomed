@@ -2,7 +2,7 @@ import { Router } from "express";
 import { Controllers } from "../controllers/controllers.js";
 import { check } from "express-validator";
 import { check_role } from "../middewares/middlewares.js";
-import { get_all, get_one } from "../controllers/get-controllers.js";
+import { aggregate, get_all, get_one } from "../controllers/get-controllers.js";
 
 const { login, registration, get_texts, update_text, cacheControl, test } =
   Controllers;
@@ -95,12 +95,22 @@ router.get("/services", async (req, res) => {
 router.get("/services/:urlName", async (req, res) => {
   const headerText = await get_texts("header");
   const footer = await get_texts("footer");
-  const current = await get_one("medicine_directions", {
-    urlName: req.params.urlName,
-  });
-  const allServices = await get_all("services", {
-    _id: { $in: current.services },
-  });
+
+  const allServices = await aggregate("medicine_directions", [
+    {
+      $lookup: {
+        from: "services",
+        localField: "_id",
+        foreignField: "medicineDirectionsIds",
+        as: "services",
+      },
+    },
+    {
+      $match: {
+        urlName: req.params.urlName,
+      },
+    },
+  ]);
 
   const js = [];
   const css = ["/css/fixed-socials.css"];

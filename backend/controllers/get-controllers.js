@@ -11,3 +11,7 @@ export const get_all = async (collection, filters = {}) => {
 export const get_one = async (collection, filters) => {
   return db.collection(collection).findOne({ ...filters });
 };
+
+export const aggregate = async (collection, params) => {
+  return db.collection(collection).aggregate(params).toArray();
+};

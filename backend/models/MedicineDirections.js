@@ -18,12 +18,6 @@ const MedicineDirectionSchema = new Schema({
   hoverColor: {
     type: String,
   },
-  services: [
-    {
-      type: Object,
-      ref: "Service",
-    },
-  ],
 });
 
 export const MedicineDirection = model(
