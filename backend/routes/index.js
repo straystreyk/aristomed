@@ -95,15 +95,12 @@ router.get("/services", async (req, res) => {
 router.get("/services/:urlName", async (req, res) => {
   const headerText = await get_texts("header");
   const footer = await get_texts("footer");
-  const current = await get_one(
-    { urlName: req.params.urlName },
-    "medicine_directions"
-  );
-  const allServices = [];
-  for (let k in current.services) {
-    const service = await get_one({ _id: current.services[k] }, "services");
-    allServices.push(service);
-  }
+  const current = await get_one("medicine_directions", {
+    urlName: req.params.urlName,
+  });
+  const allServices = await get_all("services", {
+    _id: { $in: current.services },
+  });
 
   const js = [];
   const css = ["/css/fixed-socials.css"];
