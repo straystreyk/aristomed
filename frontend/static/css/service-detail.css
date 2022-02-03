@@ -40,3 +40,7 @@
     justify-content: space-between;
     margin-bottom: 40px;
 }
+
+.service:last-child {
+    margin-bottom: 0;
+}
