@@ -3,7 +3,7 @@
 }
 
 .service_section h2 {
-    max-width: 75%;
+    max-width: 80%;
 }
 
 .service_section__content {
@@ -14,7 +14,7 @@
 
 .service__description_wrapper {
     display: flex;
-    margin-top: 4px;
+    margin-top: 6px;
     justify-content: space-between;
     align-items: flex-start;
     width: 73%;

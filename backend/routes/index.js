@@ -41,29 +41,29 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.get("/doctors", async (req, res) => {
-  const headerText = await get_texts("header");
-  const footer = await get_texts("footer");
-  const js = ["/js/doctors.js"];
-  const css = ["/css/doctors.css"];
-
-  user = req.user ? req.user : false;
-  if (req.user && req.user.roles.includes("ADMIN")) {
-    isAdmin = true;
-    js.push("/js/admin.js");
-    css.push("/css/admin.css");
-  }
-
-  res.render("doctors-page", {
-    title: "doctors",
-    resources: { css, js },
-    isAdmin,
-    user,
-    linkActive: "/doctors",
-    headerText,
-    footer,
-  });
-});
+// router.get("/doctors", async (req, res) => {
+//   const headerText = await get_texts("header");
+//   const footer = await get_texts("footer");
+//   const js = ["/js/doctors.js"];
+//   const css = ["/css/doctors.css"];
+//
+//   user = req.user ? req.user : false;
+//   if (req.user && req.user.roles.includes("ADMIN")) {
+//     isAdmin = true;
+//     js.push("/js/admin.js");
+//     css.push("/css/admin.css");
+//   }
+//
+//   res.render("doctors-page", {
+//     title: "doctors",
+//     resources: { css, js },
+//     isAdmin,
+//     user,
+//     linkActive: "/doctors",
+//     headerText,
+//     footer,
+//   });
+// });
 
 router.get("/services", async (req, res) => {
   const headerText = await get_texts("header");
