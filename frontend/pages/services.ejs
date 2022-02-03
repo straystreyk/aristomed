@@ -1,8 +1,12 @@
 <%- include('../components/header') %>
 <%- include('../components/fixed-socials') %>
-<div class="container">
-    <%directions.forEach(el => {%>
-        <a class="button rounded" style="background-color: <%= el.color%>" href="/services/<%=el.urlName%>"><%=el.name%></a>
-    <%})%>
-</div>
+<section class="directions_section">
+    <div class="container">
+        <div class="directions">
+            <%directions.forEach(el => {%>
+                <a class="button rounded direction" style="background-color: <%= el.color%>" href="/services/<%=el.urlName%>"><%=el.name%></a>
+            <%})%>
+        </div>
+    </div>
+</section>
 <%- include('../components/footer') %>

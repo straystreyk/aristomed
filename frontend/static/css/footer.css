@@ -23,7 +23,9 @@ footer {
     margin-top: 25px;
 }
 
-.footer_left p:last-child {
+.footer_left a:last-child {
+    display: inline-block;
+    color: #fff;
     margin-top: 50px;
     font-weight: 600;
 }

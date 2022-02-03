@@ -103,6 +103,17 @@ h1 {
   padding: 0;
 }
 
+h2 {
+  font-size: 54px;
+  color: var(--main_color_text);
+  font-family: "NEXT ART", sans-serif;
+  font-weight: 600;
+  line-height: 72px;
+  letter-spacing: 0.5px;
+  margin: 0;
+  padding: 0;
+}
+
 h3  {
   font-size: 26px;
   line-height: 32px;
@@ -117,7 +128,7 @@ h1 span {
   padding: 0;
 }
 
-span {
+span.text {
   background-color: var(--main_color);
   color: #fff;
   font-weight: 600;

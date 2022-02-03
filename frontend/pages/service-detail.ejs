@@ -1,11 +1,19 @@
 <%- include('../components/header') %>
 <%- include('../components/fixed-socials') %>
-<div class="container">
-    <%allServices[0].services.forEach(el => {%>
-    <div>
-        <%=el.description%>
-        <%=el.price%>
+<section class="service_section">
+    <div class="container">
+        <h2><%=currentDirection[0].name%></h2>
+        <div class="service_section__content">
+        <%currentDirection[0].services.forEach(el => {%>
+                <div class="service">
+                    <div class="service__description_wrapper">
+                        <div class="service__description"><%=el.description%></div>
+                        <div class="service__price"><%=el.price%></div>
+                    </div>
+                    <a class="button rounded" href="https://klientiks.ru/app2/ARISTOMED">Записаться на прием</a>
+                </div>
+            <%})%>
+        </div>
     </div>
-    <%})%>
-</div>
+</section>
 <%- include('../components/footer') %>

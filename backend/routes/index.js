@@ -71,7 +71,7 @@ router.get("/services", async (req, res) => {
   const directions = await get_all("medicine_directions");
 
   const js = [];
-  const css = ["/css/fixed-socials.css"];
+  const css = ["/css/fixed-socials.css", "/css/services.css"];
 
   user = req.user ? req.user : false;
   if (req.user && req.user.roles.includes("ADMIN")) {
@@ -96,7 +96,7 @@ router.get("/services/:urlName", async (req, res) => {
   const headerText = await get_texts("header");
   const footer = await get_texts("footer");
 
-  const allServices = await aggregate("medicine_directions", [
+  const currentDirection = await aggregate("medicine_directions", [
     {
       $lookup: {
         from: "services",
@@ -113,7 +113,7 @@ router.get("/services/:urlName", async (req, res) => {
   ]);
 
   const js = [];
-  const css = ["/css/fixed-socials.css"];
+  const css = ["/css/fixed-socials.css", "/css/service-detail.css"];
 
   user = req.user ? req.user : false;
   if (req.user && req.user.roles.includes("ADMIN")) {
@@ -123,14 +123,14 @@ router.get("/services/:urlName", async (req, res) => {
   }
 
   res.render("service-detail", {
-    title: "Услуги и цены",
+    title: currentDirection[0].name,
     resources: { css, js },
     isAdmin,
     user,
     linkActive: "/services",
     headerText,
     footer,
-    allServices,
+    currentDirection,
   });
 });
 

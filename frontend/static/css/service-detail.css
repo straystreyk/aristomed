@@ -1,0 +1,42 @@
+.service_section {
+    margin-top: 40px;
+}
+
+.service_section h2 {
+    max-width: 75%;
+}
+
+.service_section__content {
+    margin-top: 50px;
+    padding: 50px;
+    background: #FFFFFF;
+}
+
+.service__description_wrapper {
+    display: flex;
+    margin-top: 4px;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 73%;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--main_color_text);
+}
+
+.service__price {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--main_color);
+}
+
+.service__description {
+    font-weight: 600;
+    max-width: 82%;
+    color: var(--main_color_text);
+}
+
+.service {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
