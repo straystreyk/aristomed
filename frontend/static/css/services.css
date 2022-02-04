@@ -15,6 +15,16 @@
     font-weight: 500;
 }
 
+.directions_section__not_found {
+    max-width: 400px;
+    font-weight: 500;
+    margin-top: 30px;
+}
+
+.directions_section__not_found a {
+    color: var(--main_color);
+}
+
 .directions .direction:hover {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
