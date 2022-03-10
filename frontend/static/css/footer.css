@@ -7,6 +7,10 @@ footer {
     padding: 46px 0;
 }
 
+.footer_logo {
+    margin-right: unset;
+}
+
 .footer_left {
     color: #fff;
     max-width: 364px;
@@ -79,4 +83,32 @@ footer {
     margin-top: 50px;
     text-align: right;
     font-weight: 600;
+}
+
+@media (max-width: 1300px) {
+    .footer_contacts {
+        flex-direction: column;
+    }
+    .footer_left {
+        display: flex;
+        flex-direction: column;
+    }
+    .footer_left a:last-child {
+        margin-top: auto;
+    }
+    .footer_contacts__other {
+        margin-left: unset;
+    }
+}
+
+@media (max-width: 1024px) {
+    .footer_left {
+        max-width: unset;
+        padding-top: 25px;
+        padding-right: 60px;
+    }
+    .footer_right {
+        padding-top: 25px;
+        padding-left: 60px;
+    }
 }

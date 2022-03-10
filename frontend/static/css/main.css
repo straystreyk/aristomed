@@ -1,55 +1,6 @@
 /* fonts */
 @import "../fonts/Gilroy/stylesheet.css";
-@font-face {
-  font-family: "NEXT ART";
-  src: local("NEXT ART SemiBold"), local("NEXTART-SemiBold"),
-    url("../fonts/Nextart/Nextartsemibold.woff2") format("woff2"),
-    url("../fonts/Nextart/Nextartsemibold.woff") format("woff");
-  font-weight: 600;
-  font-style: normal;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: "NEXT ART";
-  src: local("NEXT ART Light"), local("NEXTART-Light"),
-    url("../fonts/Nextart/Nextartlight.woff2") format("woff2"),
-    url("../fonts/Nextart/Nextartlight.woff") format("woff");
-  font-weight: 300;
-  font-style: normal;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: "NEXT ART";
-  src: local("NEXT ART"), local("NEXTART"),
-    url("../fonts/Nextart/Nextart.woff2") format("woff2"),
-    url("../fonts/Nextart/Nextart.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: "NEXT ART";
-  src: local("NEXT ART Heavy"), local("NEXTART-Heavy"),
-    url("../fonts/Nextart/Nextartheavy.woff2") format("woff2"),
-    url("../fonts/Nextart/Nextartheavy.woff") format("woff");
-  font-weight: 900;
-  font-style: normal;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: "NEXT ART";
-  src: local("NEXT ART Bold"), local("NEXTART-Bold"),
-    url("../fonts/Nextart/Nextartbold.woff2") format("woff2"),
-    url("../fonts/Nextart/Nextartbold.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
-  font-display: fallback;
-}
-
+@import "../fonts/Nextart/stylesheet.css";
 
 :root {
   --main_color: #6A9470;
@@ -68,7 +19,6 @@ body {
   flex-direction: column;
   margin: 0;
   padding: 0;
-  opacity: 0;
   background-color: #f4f5f3;
   transition: 0.3s opacity ease;
 }
@@ -233,4 +183,52 @@ main {
   margin-top: 50px;
   display: flex;
   justify-content: center;
+}
+
+img {
+  opacity: 0;
+  transition: 0.35s all ease;
+}
+
+img.active {
+  opacity: 1;
+}
+
+@media (max-width: 1300px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 54px;
+    line-height: 60px;
+  }
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (max-width: 576px) {
+  br {
+    display: none;
+  }
+  h1 {
+    font-size: 34px;
+    line-height: 40px;
+  }
+  .container {
+    max-width: 90vw;
+  }
 }

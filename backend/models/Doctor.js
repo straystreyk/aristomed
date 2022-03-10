@@ -11,25 +11,19 @@ const DoctorSchema = new Schema({
     type: String,
     required: true,
   },
-  post: {
-    type: String,
-    required: true,
-  },
   experience: {
     type: Number,
     required: true,
   },
   middle_name: {
     type: String,
-    default: "",
   },
   education: {
-    type: String,
+    type: [String],
     required: true,
   },
   image: {
     type: String,
-    default: "",
   },
 });
 

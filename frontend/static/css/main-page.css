@@ -182,3 +182,16 @@
 .contacts_section__requisites > div p:last-child {
     margin-left: 32px;
 }
+
+@media (max-width: 1024px) {
+    .greetings_section {
+        margin-top: 100px;
+        margin-bottom: 90px;
+    }
+}
+
+@media (max-width: 576px) {
+    .greetings_section {
+        max-width: unset;
+    }
+}

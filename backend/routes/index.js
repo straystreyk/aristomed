@@ -1,8 +1,9 @@
+import mongoose from "mongoose";
 import { Router } from "express";
 import { Controllers } from "../controllers/controllers.js";
 import { check } from "express-validator";
 import { check_role } from "../middewares/middlewares.js";
-import { aggregate, get_all, get_one } from "../controllers/get-controllers.js";
+import { aggregate, get_all } from "../controllers/get-controllers.js";
 
 const { login, registration, get_texts, update_text, cacheControl, test } =
   Controllers;
@@ -15,9 +16,9 @@ router.use(cacheControl);
 
 //-----PAGES------
 router.get("/", async (req, res) => {
-  const pageText = await get_texts("main");
-  const headerText = await get_texts("header");
-  const footer = await get_texts("footer");
+  const pageText = await get_texts({ page: "main" });
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
 
   const js = ["/js/main-page.js"];
   const css = ["/css/main-page.css", "/css/fixed-socials.css"];
@@ -41,33 +42,72 @@ router.get("/", async (req, res) => {
   });
 });
 
-// router.get("/doctors", async (req, res) => {
-//   const headerText = await get_texts("header");
-//   const footer = await get_texts("footer");
-//   const js = ["/js/doctors.js"];
-//   const css = ["/css/doctors.css"];
-//
-//   user = req.user ? req.user : false;
-//   if (req.user && req.user.roles.includes("ADMIN")) {
-//     isAdmin = true;
-//     js.push("/js/admin.js");
-//     css.push("/css/admin.css");
-//   }
-//
-//   res.render("doctors-page", {
-//     title: "doctors",
-//     resources: { css, js },
-//     isAdmin,
-//     user,
-//     linkActive: "/doctors",
-//     headerText,
-//     footer,
-//   });
-// });
+router.get("/doctors", async (req, res) => {
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const doctors = await get_all("doctors");
+  const js = ["/js/doctors.js"];
+  const css = ["/css/doctors.css"];
+
+  user = req.user ? req.user : false;
+  if (req.user && req.user.roles.includes("ADMIN")) {
+    isAdmin = true;
+    js.push("/js/admin.js");
+    css.push("/css/admin.css");
+  }
+
+  res.render("doctors-page", {
+    title: "doctors",
+    resources: { css, js },
+    isAdmin,
+    doctors,
+    user,
+    linkActive: "/doctors",
+    headerText,
+    footer,
+  });
+});
+
+router.get("/doctors/:id", async (req, res) => {
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const currentDoctor = await aggregate("doctors", [
+    {
+      $lookup: {
+        from: "medicine_directions",
+        localField: "_id",
+        foreignField: "doctorIds",
+        as: "posts",
+      },
+    },
+    { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
+  ]);
+
+  const js = [];
+  const css = ["/css/fixed-socials.css", "/css/doctors.css"];
+
+  user = req.user ? req.user : false;
+  if (req.user && req.user.roles.includes("ADMIN")) {
+    isAdmin = true;
+    js.push("/js/admin.js");
+    css.push("/css/admin.css");
+  }
+
+  res.render("doctor-detail", {
+    title: "doctors",
+    resources: { css, js },
+    isAdmin,
+    currentDoctor,
+    user,
+    linkActive: "/doctors",
+    headerText,
+    footer,
+  });
+});
 
 router.get("/services", async (req, res) => {
-  const headerText = await get_texts("header");
-  const footer = await get_texts("footer");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
   const directions = await get_all("medicine_directions");
 
   const js = [];
@@ -93,8 +133,8 @@ router.get("/services", async (req, res) => {
 });
 
 router.get("/services/:urlName", async (req, res) => {
-  const headerText = await get_texts("header");
-  const footer = await get_texts("footer");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
 
   const currentDirection = await aggregate("medicine_directions", [
     {
@@ -137,8 +177,8 @@ router.get("/services/:urlName", async (req, res) => {
 //admin
 router.get("/admin/auth", async (req, res) => {
   if (req.user) return res.redirect("/");
-  const headerText = await get_texts("header");
-  const footer = await get_texts("footer");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
 
   res.render("auth-admin", {
     title: "admin",

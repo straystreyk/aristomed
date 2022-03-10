@@ -1,6 +1,7 @@
 .directions {
     display: flex;
     flex-wrap: wrap;
+    gap: 30px;
 }
 
 .directions_section {
@@ -9,9 +10,7 @@
 
 .directions .direction {
     flex-shrink: 0;
-    margin-right: 30px;
     color: var(--main_color_text);
-    margin-bottom: 30px;
     font-weight: 500;
 }
 
@@ -29,4 +28,14 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
     color: var(--main_color_text);
+}
+
+@media (max-width: 576px) {
+    .directions {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .directions .direction {
+        text-align: center;
+    }
 }

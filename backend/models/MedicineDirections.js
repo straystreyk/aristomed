@@ -1,5 +1,4 @@
 import pkg from "mongoose";
-import * as stream from "stream";
 
 const { Schema, model } = pkg;
 
@@ -9,6 +8,10 @@ const MedicineDirectionSchema = new Schema({
     required: true,
   },
   urlName: {
+    type: String,
+    required: true,
+  },
+  doctorDirectionName: {
     type: String,
     required: true,
   },

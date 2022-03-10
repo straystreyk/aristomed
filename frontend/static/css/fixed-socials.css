@@ -19,3 +19,9 @@
 .fixed_socials .fixed_social:hover {
     transform: translateX(-5px);
 }
+
+@media (max-width: 1024px) {
+    .fixed_socials {
+        display: none;
+    }
+}

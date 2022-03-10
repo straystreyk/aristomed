@@ -3,11 +3,15 @@ const db = mongoose.connection;
 
 /***
  * @param page - name of the page (type string)
+ * @param filter - object with mongo filters
  * description: get all texts on page
  */
-export const get_texts = async (page) => {
+export const get_texts = async (filter) => {
   try {
-    const db_texts = await db.collection("texts").find({ page }).toArray();
+    const db_texts = await db
+      .collection("texts")
+      .find({ ...filter })
+      .toArray();
     const texts = {};
     db_texts.forEach((el) => (texts[el.name] = el.value));
     return texts;

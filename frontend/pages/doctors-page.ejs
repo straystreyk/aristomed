@@ -1,7 +1,24 @@
 <%- include('../components/header') %>
-<div class="container">
-    <div class="doctors_wrapper">
-
+<section class="doctors_section">
+    <div class="container">
+        <h2>Наши врачи</h2>
+        <div class="doctors_wrapper">
+            <%doctors.forEach(el => {%>
+                <a href="" class="doctor_card">
+                    <div class="doctor_image">
+                        <img data-src="<%=el.image%>"
+                             src="" alt="<%=`${el.name ?? ""} ${el.middle_name ?? ""} ${el.surname ?? ""}`%>"
+                        >
+                    </div>
+                    <div class="doctor_info">
+                        <div class="doctor_name">
+                            <%=`${el.surname ?? ""}`%><br>
+                            <%=`${el.middle_name ?? ""} ${el.name ?? ""}`%>
+                        </div>
+                    </div>
+                </a>
+            <%})%>
+        </div>
     </div>
-</div>
+</section>
 <%- include('../components/footer') %>
