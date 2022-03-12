@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/materialize.min.css">
     <% resources.css.forEach(el => { %> <link rel="stylesheet" href=<%=el%>> <% }) %>
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/footer.css">
@@ -71,7 +72,7 @@ const links = [
                     <div class="editble" data-page="header" data-name="contactsHeader"><%-headerText.contactsHeader%></div>
                 </div>
             </div>
-            <nav class="header_nav">
+            <div class="header_nav">
                 <ul>
                     <li>
                         <a class="<% if(linkActive === "/services") {%> active <%}%>" href="/services">Услуги и цены</a>
@@ -96,7 +97,7 @@ const links = [
                         </ul>
                     </div>
                 </div>
-            </nav>
+            </div>
 <!--             <input class="main_search_input" type="text">-->
             <%if(user) {%>
             <div class="user_interface">

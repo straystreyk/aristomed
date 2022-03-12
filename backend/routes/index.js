@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Router } from "express";
 import { Controllers } from "../controllers/controllers.js";
-import { check } from "express-validator";
+import { check, query } from "express-validator";
 import { check_role } from "../middewares/middlewares.js";
 import { aggregate, get_all } from "../controllers/get-controllers.js";
 
@@ -45,7 +45,49 @@ router.get("/", async (req, res) => {
 router.get("/doctors", async (req, res) => {
   const headerText = await get_texts({ page: "header" });
   const footer = await get_texts({ page: "footer" });
-  const doctors = await get_all("doctors");
+
+  let { page = 1, limit = 9, medicine_direction } = req.query;
+
+  const skip = (page - 1) * limit;
+
+  let params = [
+    {
+      $lookup: {
+        from: "medicine_directions",
+        localField: "medicine_direction_ids",
+        foreignField: "_id",
+        as: "medicine_directions",
+      },
+    },
+    {
+      $facet: {
+        data: [{ $skip: skip }, { $limit: limit }],
+        metadata: [
+          {
+            $group: {
+              _id: null,
+              total: { $sum: 1 },
+            },
+          },
+        ],
+      },
+    },
+  ];
+
+  if (medicine_direction) {
+    params = [
+      {
+        $match: {
+          medicine_direction_ids: mongoose.Types.ObjectId(medicine_direction),
+        },
+      },
+      ...params,
+    ];
+  }
+
+  const doctors = await aggregate("doctors", params);
+  const all_medicine_directions = await get_all("medicine_directions");
+
   const js = ["/js/doctors.js"];
   const css = ["/css/doctors.css"];
 
@@ -57,11 +99,15 @@ router.get("/doctors", async (req, res) => {
   }
 
   res.render("doctors-page", {
-    title: "doctors",
+    title: "Наши врачи",
     resources: { css, js },
     isAdmin,
-    doctors,
+    doctors: doctors[0].data,
+    metadata: doctors[0].metadata[0],
+    all_medicine_directions,
+    page,
     user,
+    active_select: medicine_direction ?? false,
     linkActive: "/doctors",
     headerText,
     footer,
@@ -75,9 +121,9 @@ router.get("/doctors/:id", async (req, res) => {
     {
       $lookup: {
         from: "medicine_directions",
-        localField: "_id",
-        foreignField: "doctorIds",
-        as: "posts",
+        localField: "medicine_direction_ids",
+        foreignField: "_id",
+        as: "medicine_directions",
       },
     },
     { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
@@ -97,7 +143,7 @@ router.get("/doctors/:id", async (req, res) => {
     title: "doctors",
     resources: { css, js },
     isAdmin,
-    currentDoctor,
+    currentDoctor: currentDoctor[0],
     user,
     linkActive: "/doctors",
     headerText,

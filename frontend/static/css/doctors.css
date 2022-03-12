@@ -3,14 +3,16 @@
 }
 
 .doctors_wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 70px;
     margin-top: 50px;
 }
 
 .doctor_card {
-    width: 33.3333%;
-    gap: 70px;
     background: #A4BCA7;
+    display: flex;
+    flex-direction: column;
 }
 
 .doctor_image {
@@ -24,13 +26,198 @@
 }
 
 .doctor_info {
-    border-right: 36px solid red;
     padding: 30px;
+    position: relative;
+    height: 100%;
 }
 
+.medicine_directions {
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    height: 30px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.medicine_directions .color {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+}
 .doctor_name {
     font-size: 20px;
     line-height: 23px;
     font-weight: 700;
     color: #fff;
+    position: relative;
+    display: inline-block;
+}
+
+
+.doctor_name:before {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #fff;
+}
+
+.doctors_top_bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.medicine_directions option {
+    position: relative;
+}
+
+.medicine_directions .before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: red;
+}
+
+.dropdown-content {
+    max-height: 300px;
+}
+
+.dropdown-content li > span {
+    color: var(--main_color_text);
+    border-left: 10px solid var(--main_color);
+}
+
+.dropdown-content li:first-child {
+    display: none;
+}
+
+.select-wrapper {
+    padding-right: 25px;
+}
+
+.select-wrapper input.select-dropdown {
+    padding-right: 25px;
+    border-bottom: 1px solid var(--main_color);
+    font-family: "Gilroy", sans-serif;
+}
+
+.select-wrapper input {
+    padding-right: 25px;
+}
+
+.dropdown-content::-webkit-scrollbar {
+    width: 10px;
+    transition: 0.35s all ease;
+}
+
+.select-wrapper input.select-dropdown:focus {
+    border-bottom: 1px solid var(--main_color);
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+    background: var(--main_color);
+    background-clip: padding-box;
+    border-radius: 20px;
+    border: 3px solid rgba(0,0,0,0);
+    transition: 0.35s all ease;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 7px;
+    transition: 0.35s all ease;
+}
+
+
+.pagination_wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.pagination_wrapper .pagination_bullet {
+    font-size: 14px;
+    margin: 0 4px;
+    line-height: 1;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    font-family: "Gilroy", sans-serif;
+    border-radius: 50%;
+    color: var(--main_color_text);
+    background-color: #e3e2e2;
+    font-weight: 500;
+}
+
+.pagination_wrapper .pagination_bullet.active {
+    background-color: var(--main_color);
+    color: #fff;
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+}
+
+.clear_filter {
+    margin-left: 15px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E7E7E7;
+    border-radius: 50%;
+}
+.clear_filter svg {
+    width: 15px;
+    height: auto;
+}
+
+.clear_filter svg path {
+    fill: var(--main_color_text);
+}
+
+.empty_filter {
+    display: flex;
+    margin: 100px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.empty_filter a {
+    margin-top: 25px;
+}
+
+.empty_filter p {
+    font-size: 36px;
+    font-weight: 600;
+}
+
+
+
+@media (max-width: 1300px) {
+    .doctors_wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .doctors_wrapper {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 35px;
+    }
 }

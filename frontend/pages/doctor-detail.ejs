@@ -1,7 +1,8 @@
 <%- include('../components/header') %>
 <%- include('../components/fixed-socials') %>
 <div>
-    <%currentDoctor[0].posts.forEach(el => {%>
+    <%=currentDoctor.name%>
+    <%currentDoctor.medicine_directions.forEach(el => {%>
         <span><%=el.doctorDirectionName%></span>
     <%})%>
 </div>

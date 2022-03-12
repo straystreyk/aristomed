@@ -1,24 +1,67 @@
 <%- include('../components/header') %>
 <section class="doctors_section">
     <div class="container">
-        <h2>Наши врачи</h2>
-        <div class="doctors_wrapper">
-            <%doctors.forEach(el => {%>
-                <a href="" class="doctor_card">
-                    <div class="doctor_image">
-                        <img data-src="<%=el.image%>"
-                             src="" alt="<%=`${el.name ?? ""} ${el.middle_name ?? ""} ${el.surname ?? ""}`%>"
-                        >
-                    </div>
-                    <div class="doctor_info">
-                        <div class="doctor_name">
-                            <%=`${el.surname ?? ""}`%><br>
-                            <%=`${el.middle_name ?? ""} ${el.name ?? ""}`%>
-                        </div>
-                    </div>
-                </a>
-            <%})%>
+        <div class="doctors_top_bar">
+            <h2>Наши врачи</h2>
+            <div class="filter">
+            <select name="medicine_directions" id="medicine_directions">
+                <option value="" selected disabled hidden>Выберите направление</option>
+                <%all_medicine_directions.forEach(el => {%>
+                    <%if(el._id.toString() === active_select) {%>
+                        <option data-color="<%=el.color%>" value="<%=el._id%>" selected><%=el.name%></option>
+                    <%} else {%>
+                        <option data-color="<%=el.color%>" value="<%=el._id%>"><%=el.name%></option>
+                    <%}%>
+                <%})%>
+            </select>
+            <%if (active_select) {%> <a href="/doctors" class="clear_filter hoverable">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.20711 0.292893C1.81658 -0.0976311 1.18342 -0.0976311 0.792893 0.292893C0.402369 0.683418 0.402369 1.31658 0.792893 1.70711L2.20711 0.292893ZM14.2929 15.2071C14.6834 15.5976 15.3166 15.5976 15.7071 15.2071C16.0976 14.8166 16.0976 14.1834 15.7071 13.7929L14.2929 15.2071ZM15.7071 1.70711C16.0976 1.31658 16.0976 0.683418 15.7071 0.292893C15.3166 -0.0976311 14.6834 -0.0976311 14.2929 0.292893L15.7071 1.70711ZM0.792893 13.7929C0.402369 14.1834 0.402369 14.8166 0.792893 15.2071C1.18342 15.5976 1.81658 15.5976 2.20711 15.2071L0.792893 13.7929ZM0.792893 1.70711L7.54289 8.45711L8.95711 7.04289L2.20711 0.292893L0.792893 1.70711ZM7.54289 8.45711L14.2929 15.2071L15.7071 13.7929L8.95711 7.04289L7.54289 8.45711ZM8.95711 8.45711L15.7071 1.70711L14.2929 0.292893L7.54289 7.04289L8.95711 8.45711ZM14.2929 0.292893L0.792893 13.7929L2.20711 15.2071L15.7071 1.70711L14.2929 0.292893Z" fill="#6A9470"/>
+                    </svg></a> <%}%>
+            </div>
         </div>
+        <%if(doctors.length) {%>
+            <div class="doctors_wrapper">
+                <%doctors.forEach(el => {%>
+                    <a href="/doctors/<%=el._id%>" class="doctor_card un_styled hoverable">
+                        <div class="doctor_image">
+                            <img data-src="<%=el.image%>"
+                                 src="" alt="<%=`${el.name ?? ""} ${el.middle_name ?? ""} ${el.surname ?? ""}`%>"
+                            >
+                        </div>
+                        <div class="doctor_info">
+                            <div class="doctor_name">
+                                <%=`${el.surname ?? ""}`%><br>
+                                <%=`${el.name ?? ""} ${el.middle_name ?? ""}`%>
+                            </div>
+                            <div class="medicine_directions">
+                                <%el.medicine_directions.forEach((direction, index) => {%>
+                                <%if (direction.color) {%><div class="color" style="background-color: <%=direction.color%>; height: calc(100% / <%=index + 1%>)"></div><%}%>
+                                <span>
+                                    <%if (index !== 0) {%><%=direction.doctorDirectionName.charAt(0).toLowerCase() + direction.doctorDirectionName.slice(1)%><%} else {%><%=direction.doctorDirectionName%><%}%><% if(index !== el.medicine_directions.length - 1) {%>,<%}%>
+                                </span>
+                                <%})%>
+                            </div>
+                            <button class="button">
+                                Подробнее
+                            </button>
+                        </div>
+                    </a>
+                <%})%>
+            </div>
+            <%if (metadata && metadata.total && Math.ceil(metadata.total / 9) !== 1) {%>
+            <div class="pagination_wrapper">
+                <%for (let i = 0; i < Math.ceil(metadata.total / 9); i++)  {%>
+                    <button class="pagination_bullet hoverable <%if (+page === i + 1){%>active<%}%>" value="<%= i+ 1%>"><%=i + 1%></button>
+                <%}%>
+            </div>
+            <%}%>
+        <%} else {%>
+            <div class="empty_filter">
+                <p>Ничего не найдено</p>
+                <a href="/doctors" class="button rounded">Вернуться к списку</a>
+            </div>
+        <%}%>
     </div>
 </section>
 <%- include('../components/footer') %>

@@ -14,6 +14,7 @@ body {
   line-height: 24px;
   font-weight: 400;
   color: var(--main_color_text);
+  opacity: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -29,8 +30,16 @@ a {
   transition: 0.35s all ease;
 }
 
+button {
+  border: none
+}
+
 a:hover {
   color: var(--main_color);
+}
+
+a.un_styled:hover {
+  color: inherit;
 }
 
 b {
@@ -99,7 +108,7 @@ ul li {
 }
 
 .container {
-  max-width: 1200px;
+  width: 1200px;
   margin: 0 auto;
 }
 
@@ -119,6 +128,7 @@ main {
   font-weight: 700;
   display: inline-block;
   transition: 0.35s all ease;
+  cursor: pointer;
 }
 
 .button:hover {
@@ -196,7 +206,7 @@ img.active {
 
 @media (max-width: 1300px) {
   .container {
-    max-width: 960px;
+    width: 960px;
   }
 }
 
@@ -206,7 +216,7 @@ img.active {
     line-height: 60px;
   }
   .container {
-    max-width: 720px;
+    width: 720px;
   }
 }
 
@@ -216,7 +226,7 @@ img.active {
     line-height: 20px;
   }
   .container {
-    max-width: 540px;
+    width: 540px;
   }
 }
 
@@ -229,6 +239,6 @@ img.active {
     line-height: 40px;
   }
   .container {
-    max-width: 90vw;
+    width: 90vw;
   }
 }
