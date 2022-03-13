@@ -1,9 +1,46 @@
 <%- include('../components/header') %>
 <%- include('../components/fixed-socials') %>
-<div>
-    <%=currentDoctor.name%>
-    <%currentDoctor.medicine_directions.forEach(el => {%>
-        <span><%=el.doctorDirectionName%></span>
-    <%})%>
+<div class="doctor_detail_section">
+    <div class="container">
+        <div class="doctors_name">
+            <h1><%=currentDoctor.surname%><br><%=`${currentDoctor.name} ${currentDoctor.middle_name}`%></h1>
+            <a href="/doctors" class="button">Вернуться</a>
+        </div>
+        <div class="doctors_info_wrapper">
+            <div class="doctors_info">
+                <div class="doctor_post">
+                    <%if (currentDoctor.medicine_directions.length){%>
+                        <p>
+                            <%currentDoctor.medicine_directions.forEach((direction, index) => {%>
+                               <%if (index !== 0) {%><%=direction.doctorDirectionName.charAt(0).toLowerCase() + direction.doctorDirectionName.slice(1)%><%} else {%><%=direction.doctorDirectionName%><%}%><% if(index !== currentDoctor.medicine_directions.length - 1) {%>,<%}%>
+                            <%})%>
+                        </p>
+                    <%}%>
+                    <%if (currentDoctor.experience) {%>
+                    <p>
+                        Стаж работы: <%=currentDoctor.experience%>
+                    </p>
+                    <%}%>
+                </div>
+                <%if(currentDoctor.education.length) {%>
+                    <%currentDoctor.education.forEach(el => {%>
+                        <div class="doctors_education_item">
+                            <span class="title"><%=el.title%></span>
+                            <%if (el.description.length) {%>
+                                <p>
+                                    <%-el.description.map(el => el + ".").join("<br/>")%>
+                                </p>
+                            <%}%>
+                        </div>
+                    <%})%>
+                <%}%>
+            </div>
+            <div class="doctors_image">
+                <img data-src="<%=currentDoctor.image%>"
+                     src="" alt="<%=`${currentDoctor.name ?? ""} ${currentDoctor.middle_name ?? ""} ${currentDoctor.surname ?? ""}`%>"
+                >
+            </div>
+        </div>
+    </div>
 </div>
 <%- include('../components/footer') %>

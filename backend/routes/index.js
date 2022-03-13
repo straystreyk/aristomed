@@ -130,7 +130,7 @@ router.get("/doctors/:id", async (req, res) => {
   ]);
 
   const js = [];
-  const css = ["/css/fixed-socials.css", "/css/doctors.css"];
+  const css = ["/css/fixed-socials.css", "/css/doctor-detail.css"];
 
   user = req.user ? req.user : false;
   if (req.user && req.user.roles.includes("ADMIN")) {
@@ -140,7 +140,7 @@ router.get("/doctors/:id", async (req, res) => {
   }
 
   res.render("doctor-detail", {
-    title: "doctors",
+    title: `${currentDoctor[0].surname} ${currentDoctor[0].name} ${currentDoctor[0].middle_name}`,
     resources: { css, js },
     isAdmin,
     currentDoctor: currentDoctor[0],
