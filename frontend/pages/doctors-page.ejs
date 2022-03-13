@@ -64,4 +64,8 @@
         <%}%>
     </div>
 </section>
+
+<script>
+    window.colors = <%-JSON.stringify(all_medicine_directions.map(el => el.color))%>
+</script>
 <%- include('../components/footer') %>

@@ -93,7 +93,6 @@
 
 .dropdown-content li > span {
     color: var(--main_color_text);
-    border-left: 10px solid var(--main_color);
 }
 
 .dropdown-content li:first-child {
