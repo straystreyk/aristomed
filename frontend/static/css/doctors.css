@@ -17,6 +17,7 @@
 
 .doctor_image {
     height: 323px;
+    flex-shrink: 0;
 }
 
 .doctor_image img {
