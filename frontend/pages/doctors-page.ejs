@@ -1,4 +1,5 @@
 <%- include('../components/header') %>
+<%- include('../components/breadcrumbs') %>
 <section class="doctors_section">
     <div class="container">
         <div class="doctors_top_bar">
@@ -35,11 +36,12 @@
                                 <%=`${el.name ?? ""} ${el.middle_name ?? ""}`%>
                             </div>
                             <div class="medicine_directions">
+                                <%=el.post%>
                                 <%el.medicine_directions.forEach((direction, index) => {%>
-                                <%if (direction.color) {%><div class="color" style="background-color: <%=direction.color%>; height: calc(100% / <%=index + 1%>)"></div><%}%>
-                                <span>
-                                    <%if (index !== 0) {%><%=direction.doctorDirectionName.charAt(0).toLowerCase() + direction.doctorDirectionName.slice(1)%><%} else {%><%=direction.doctorDirectionName%><%}%><% if(index !== el.medicine_directions.length - 1) {%>,<%}%>
-                                </span>
+                                    <%if (direction.color) {%><div class="color" style="background-color: <%=direction.color%>; height: calc(100% / <%=index + 1%>)"></div><%}%>
+                                    <span>
+                                        <%if (index !== 0) {%><%=direction.doctorDirectionName.charAt(0).toLowerCase() + direction.doctorDirectionName.slice(1)%><%} else {%><%=direction.doctorDirectionName%><%}%><% if(index !== el.medicine_directions.length - 1) {%>,<%}%>
+                                    </span>
                                 <%})%>
                             </div>
                             <button class="button">
@@ -49,13 +51,14 @@
                     </a>
                 <%})%>
             </div>
-            <%if (metadata && metadata.total && Math.ceil(metadata.total / 9) !== 1) {%>
-            <div class="pagination_wrapper">
-                <%for (let i = 0; i < Math.ceil(metadata.total / 9); i++)  {%>
-                    <button class="pagination_bullet hoverable <%if (+page === i + 1){%>active<%}%>" value="<%= i+ 1%>"><%=i + 1%></button>
-                <%}%>
-            </div>
-            <%}%>
+<!--        if u need pagination!!!!-->
+<!--            <%if (metadata && metadata.total && Math.ceil(metadata.total / 9) !== 1) {%>-->
+<!--            <div class="pagination_wrapper">-->
+<!--                <%for (let i = 0; i < Math.ceil(metadata.total / 9); i++)  {%>-->
+<!--                    <button class="pagination_bullet hoverable <%if (+page === i + 1){%>active<%}%>" value="<%= i+ 1%>"><%=i + 1%></button>-->
+<!--                <%}%>-->
+<!--            </div>-->
+<!--            <%}%>-->
         <%} else {%>
             <div class="empty_filter">
                 <p>Ничего не найдено</p>

@@ -1,39 +1,44 @@
 <%- include('../components/header') %>
 <%- include('../components/fixed-socials') %>
+<%- include('../components/breadcrumbs') %>
 <div class="doctor_detail_section">
     <div class="container">
         <div class="doctors_name">
             <h1><%=currentDoctor.surname%><br><%=`${currentDoctor.name} ${currentDoctor.middle_name}`%></h1>
             <a href="/doctors" class="button">Вернуться</a>
         </div>
-        <div class="doctors_info_wrapper">
-            <div class="doctors_info">
-                <div class="doctor_post">
-                    <%if (currentDoctor.medicine_directions.length){%>
+        <div class="doctor_detail_wrapper">
+            <div class="doctor_info_wrapper">
+                <div class="doctors_info">
+                    <div class="doctor_post">
                         <p>
-                            <%currentDoctor.medicine_directions.forEach((direction, index) => {%>
-                               <%if (index !== 0) {%><%=direction.doctorDirectionName.charAt(0).toLowerCase() + direction.doctorDirectionName.slice(1)%><%} else {%><%=direction.doctorDirectionName%><%}%><% if(index !== currentDoctor.medicine_directions.length - 1) {%>,<%}%>
-                            <%})%>
+                        <%=currentDoctor.post%>
+                            <%if (currentDoctor.medicine_directions.length){%>
+                                    <%currentDoctor.medicine_directions.forEach((direction, index) => {%>
+                                       <%if (index !== 0) {%><%=direction.doctorDirectionName.charAt(0).toLowerCase() + direction.doctorDirectionName.slice(1)%><%} else {%><%=direction.doctorDirectionName%><%}%><% if(index !== currentDoctor.medicine_directions.length - 1) {%>,<%}%>
+                                    <%})%>
+                            <%}%>
                         </p>
-                    <%}%>
-                    <%if (currentDoctor.experience) {%>
-                    <p>
-                        Стаж работы: <%=currentDoctor.experience%>
-                    </p>
+                        <%if (currentDoctor.experience) {%>
+                        <p>
+                            Стаж работы: <%=currentDoctor.experience%>
+                        </p>
+                        <%}%>
+                    </div>
+                    <%if(currentDoctor.education.length) {%>
+                        <%currentDoctor.education.forEach(el => {%>
+                            <div class="doctors_education_item">
+                                <span class="title"><%=el.title%></span>
+                                <%if (el.description.length) {%>
+                                    <p>
+                                        <%-el.description.map(el => el + ".").join("<br/>")%>
+                                    </p>
+                                <%}%>
+                            </div>
+                        <%})%>
                     <%}%>
                 </div>
-                <%if(currentDoctor.education.length) {%>
-                    <%currentDoctor.education.forEach(el => {%>
-                        <div class="doctors_education_item">
-                            <span class="title"><%=el.title%></span>
-                            <%if (el.description.length) {%>
-                                <p>
-                                    <%-el.description.map(el => el + ".").join("<br/>")%>
-                                </p>
-                            <%}%>
-                        </div>
-                    <%})%>
-                <%}%>
+                <a class="button rounded" target="_blank" href="https://klientiks.ru/app2/ARISTOMED">Записаться на прием</a>
             </div>
             <div class="doctors_image">
                 <img data-src="<%=currentDoctor.image%>"

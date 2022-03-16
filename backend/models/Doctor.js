@@ -26,8 +26,12 @@ const DoctorSchema = new Schema({
     type: String,
     required: true,
   },
+  post: {
+    type: String,
+    required: false,
+  },
   experience: {
-    type: Number,
+    type: String,
     required: false,
   },
   middle_name: {

@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import {get_texts} from "../controllers/text-controllers.js";
 export const check_role = (req, res, next) => {
   try {
     const token = req.cookies.token;
@@ -13,20 +12,24 @@ export const check_role = (req, res, next) => {
     }
   } catch (e) {
     if (e.message === "jwt expired") {
-      const token = req.cookies.token
+      const token = req.cookies.token;
     }
     console.log(e.message);
   }
   next();
 };
-//
-// //Забирает все тексты для хедера и футера
-// export const getAllPagesTexts = await (req, res, next) => {
-//   try {
-//     const headerText = await get_texts("header");
-//     req.texts.header = headerText
-//   } catch (e) {
-//     console.log(e.message)
-//   }
-//   next();
-// }
+
+const breadcrumbsI18N = {
+  doctors: "Наши врачи",
+  services: "Услуги и цены",
+};
+export const bread_crumbs = (req, res, next) => {
+  const urls = req.originalUrl.split("/");
+  req.breadcrumbs = urls.map((url, i) => {
+    return {
+      breadcrumbName: url === "" ? "Главная" : breadcrumbsI18N[url],
+      breadcrumbUrl: url === "" ? "/" : `${urls.slice(0, i + 1).join("/")}`,
+    };
+  });
+  next();
+};

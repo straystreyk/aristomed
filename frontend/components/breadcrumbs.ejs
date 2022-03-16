@@ -1,0 +1,9 @@
+<%if (breadcrumbs && breadcrumbs.length) {%>
+    <div class="container">
+        <div class="breadcrumbs">
+            <%breadcrumbs.forEach((el, index) => {%>
+                <a class="<%if (index === breadcrumbs.length - 1) {%>active<%}%>" href="<%=el.breadcrumbUrl%>"><%=el.breadcrumbName%></a><span><%if (index !== breadcrumbs.length - 1){%> ><%}%></span>
+            <%})%>
+        </div>
+    </div>
+<%}%>

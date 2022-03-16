@@ -1,0 +1,12 @@
+.breadcrumbs {
+    font-size: 12px;
+    margin: 10px 0;
+}
+
+.breadcrumbs span {
+    margin: 0 2px;
+}
+
+.breadcrumbs a.active {
+    color: var(--main_color);
+}

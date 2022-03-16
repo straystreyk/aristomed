@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import { Router } from "express";
 import { Controllers } from "../controllers/controllers.js";
-import { check, query } from "express-validator";
-import { check_role } from "../middewares/middlewares.js";
+import { check } from "express-validator";
+import { bread_crumbs, check_role } from "../middewares/middlewares.js";
 import { aggregate, get_all } from "../controllers/get-controllers.js";
 
 const { login, registration, get_texts, update_text, cacheControl, test } =
@@ -12,6 +12,7 @@ export let user = false;
 export const router = Router();
 
 router.use(check_role);
+router.use(bread_crumbs);
 router.use(cacheControl);
 
 //-----PAGES------
@@ -45,6 +46,7 @@ router.get("/", async (req, res) => {
 router.get("/doctors", async (req, res) => {
   const headerText = await get_texts({ page: "header" });
   const footer = await get_texts({ page: "footer" });
+  const breadcrumbs = req.breadcrumbs;
 
   let { page = 1, limit = 9, medicine_direction } = req.query;
 
@@ -61,7 +63,9 @@ router.get("/doctors", async (req, res) => {
     },
     {
       $facet: {
-        data: [{ $skip: skip }, { $limit: limit }],
+        // if u need pagination
+        // data: [{ $skip: skip }, { $limit: limit }],
+        data: [],
         metadata: [
           {
             $group: {
@@ -86,10 +90,19 @@ router.get("/doctors", async (req, res) => {
   }
 
   const doctors = await aggregate("doctors", params);
-  const all_medicine_directions = await get_all("medicine_directions");
+  const all_medicine_directions = await get_all("medicine_directions").then(
+    (data) =>
+      data.filter(
+        (el) =>
+          ![
+            "consultations_of_narrow_specialists",
+            "consultations_of_wide_specialists",
+          ].includes(el.urlName)
+      )
+  );
 
   const js = ["/js/doctors.js"];
-  const css = ["/css/doctors.css"];
+  const css = ["/css/doctors.css", "/css/breadcrumbs.css"];
 
   user = req.user ? req.user : false;
   if (req.user && req.user.roles.includes("ADMIN")) {
@@ -110,6 +123,7 @@ router.get("/doctors", async (req, res) => {
     active_select: medicine_direction ?? false,
     linkActive: "/doctors",
     headerText,
+    breadcrumbs,
     footer,
   });
 });
@@ -117,6 +131,7 @@ router.get("/doctors", async (req, res) => {
 router.get("/doctors/:id", async (req, res) => {
   const headerText = await get_texts({ page: "header" });
   const footer = await get_texts({ page: "footer" });
+
   const currentDoctor = await aggregate("doctors", [
     {
       $lookup: {
@@ -129,8 +144,21 @@ router.get("/doctors/:id", async (req, res) => {
     { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
   ]);
 
+  const breadcrumbs = req.breadcrumbs.map((el) =>
+    el.breadcrumbUrl.includes(req.params.id)
+      ? {
+          ...el,
+          breadcrumbName: `${currentDoctor[0].surname} ${currentDoctor[0].name} ${currentDoctor[0].middle_name}`,
+        }
+      : el
+  );
+
   const js = [];
-  const css = ["/css/fixed-socials.css", "/css/doctor-detail.css"];
+  const css = [
+    "/css/fixed-socials.css",
+    "/css/doctor-detail.css",
+    "/css/breadcrumbs.css",
+  ];
 
   user = req.user ? req.user : false;
   if (req.user && req.user.roles.includes("ADMIN")) {
@@ -147,6 +175,7 @@ router.get("/doctors/:id", async (req, res) => {
     user,
     linkActive: "/doctors",
     headerText,
+    breadcrumbs,
     footer,
   });
 });
@@ -155,9 +184,14 @@ router.get("/services", async (req, res) => {
   const headerText = await get_texts({ page: "header" });
   const footer = await get_texts({ page: "footer" });
   const directions = await get_all("medicine_directions");
+  const breadcrumbs = req.breadcrumbs;
 
   const js = [];
-  const css = ["/css/fixed-socials.css", "/css/services.css"];
+  const css = [
+    "/css/fixed-socials.css",
+    "/css/services.css",
+    "/css/breadcrumbs.css",
+  ];
 
   user = req.user ? req.user : false;
   if (req.user && req.user.roles.includes("ADMIN")) {
@@ -175,6 +209,7 @@ router.get("/services", async (req, res) => {
     headerText,
     footer,
     directions,
+    breadcrumbs,
   });
 });
 
@@ -198,8 +233,21 @@ router.get("/services/:urlName", async (req, res) => {
     },
   ]);
 
+  const breadcrumbs = req.breadcrumbs.map((el) =>
+    el.breadcrumbUrl.includes(req.params.urlName)
+      ? {
+          ...el,
+          breadcrumbName: `${currentDirection[0].name}`,
+        }
+      : el
+  );
+
   const js = [];
-  const css = ["/css/fixed-socials.css", "/css/service-detail.css"];
+  const css = [
+    "/css/fixed-socials.css",
+    "/css/service-detail.css",
+    "/css/breadcrumbs.css",
+  ];
 
   user = req.user ? req.user : false;
   if (req.user && req.user.roles.includes("ADMIN")) {
@@ -217,6 +265,7 @@ router.get("/services/:urlName", async (req, res) => {
     headerText,
     footer,
     currentDirection,
+    breadcrumbs,
   });
 });
 
@@ -232,7 +281,7 @@ router.get("/admin/auth", async (req, res) => {
       css: ["/css/auth.css"],
       js: ["/js/auth.js"],
     },
-    linkActive: "/doctors",
+    linkActive: "",
     isAdmin,
     headerText,
     footer,
