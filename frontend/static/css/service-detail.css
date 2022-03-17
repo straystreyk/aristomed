@@ -44,3 +44,33 @@
 .service:last-child {
     margin-bottom: 0;
 }
+
+@media (max-width: 1300px) {
+    .service {
+        flex-direction: column;
+    }
+    .service__description_wrapper {
+        width: 100%;
+    }
+    .service a.button.rounded {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .service__price {
+        font-size: 24px;
+        margin-left: 5px;
+    }
+    .service_section__content {
+        margin-top: 30px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .service a.button.rounded {
+        width: 100%;
+        text-align: center;
+    }
+}

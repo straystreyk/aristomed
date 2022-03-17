@@ -1,10 +1,12 @@
 .breadcrumbs {
     font-size: 12px;
     margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .breadcrumbs span {
-    margin: 0 2px;
+    margin: 0 6px;
 }
 
 .breadcrumbs a.active {

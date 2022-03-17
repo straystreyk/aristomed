@@ -8,6 +8,10 @@
   --main_color_text: #262626;
 }
 
+.swiper {
+  margin-left: unset;
+  margin-right: unset;
+}
 body {
   font-family: "Gilroy", sans-serif;
   font-size: 16px;
@@ -141,10 +145,6 @@ main {
   padding: 18px 39px;
 }
 
-.map {
-  height: 400px;
-}
-
 .user_interface {
   position: fixed;
   top: 20px;
@@ -228,6 +228,13 @@ img.active {
   .container {
     width: 540px;
   }
+  h2 {
+    font-size: 36px;
+    line-height: 54px;
+  }
+  .button.rounded {
+    padding: 14px 18px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -240,5 +247,12 @@ img.active {
   }
   .container {
     width: 90vw;
+  }
+  .doctor_name {
+    font-size: 18px;
+    line-height: 20px;
+  }
+  .doctor_name:before {
+    bottom: -2px
   }
 }

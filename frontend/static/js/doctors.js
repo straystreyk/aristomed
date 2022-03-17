@@ -4,8 +4,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const instances = M.FormSelect.init(select);
   const url_params = new URLSearchParams(window.location.search);
 
-  console.log(window.colors);
-
   instances.dropdownOptions.childNodes.forEach((el, index) => {
     if (index === 0) return;
     el.style.borderLeft = `8px solid ${window.colors[index - 1]}`;

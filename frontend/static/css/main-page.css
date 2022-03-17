@@ -122,6 +122,10 @@
     max-width: 522px;
 }
 
+.map {
+    height: 400px;
+}
+
 .about_section__text p {
     margin-top: 25px;
 }
@@ -138,6 +142,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 40px;
+    flex-wrap: wrap;
 }
 
 .contacts_section__title h1 {
@@ -145,7 +150,7 @@
 }
 
 .contacts_section__title p {
-    margin-left: 200px;
+    margin-left: auto;
     line-height: 19px;
 }
 
@@ -156,6 +161,8 @@
 
 .contacts_section__contacts .social {
     margin-right: 11px;
+    display: flex;
+    align-items: center;
     padding: 20px;
 }
 
@@ -188,10 +195,85 @@
         margin-top: 100px;
         margin-bottom: 90px;
     }
+    .about_section__content {
+        flex-direction: column;
+    }
+    .about_section {
+        margin-top: 100px;
+    }
+    .about_section__steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .about_section__text {
+        margin-left: 0;
+        max-width: unset;
+        margin-top: 30px;
+    }
+    .contacts_section {
+        margin-top: 100px;
+    }
+    .contacts_section__contacts {
+        flex-wrap: wrap;
+    }
+    .contacts_section__contacts p {
+        font-size: 14px;
+    }
+    .contacts_section__requisites {
+        margin-left: 30px;
+    }
+    .contacts_section__contacts .social {
+        padding: 10px;
+    }
+    .contacts_section__contacts .social svg {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 767px) {
+    .contacts_section__title p {
+        margin-left: unset;
+        margin-top: 10px;
+    }
+    .about_section__text p:nth-child(2) {
+        margin-top: 10px;
+    }
+    .about_section__text p {
+        margin-top: 15px;
+    }
+    .contacts_section {
+        margin-top: 100px;
+    }
+    .about_section {
+        margin-top: 100px;
+    }
+    .contacts_section__requisites {
+        margin: 0;
+        margin-top: 15px;
+    }
+    .map {
+        height: 200px;
+    }
 }
 
 @media (max-width: 576px) {
     .greetings_section {
         max-width: unset;
+    }
+    .about_section__steps {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .about_section__steps .step:first-child::before {
+        top: calc(100% + 7px);
+        left: 50%;
+        transform: translateX(-50%) rotate(90deg);
+    }
+    .about_section__steps .step:nth-child(4)::before {
+        top: -46px;
+        transform: translateX(-50%) rotate(90deg);
+        left: 50%;
+    }
+    .contacts_section__contacts a{
+        margin-bottom: 15px;
     }
 }

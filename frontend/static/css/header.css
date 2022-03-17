@@ -58,6 +58,7 @@ header {
 .burger .line {
   height: 4px;
   width: 30px;
+  border-radius: 5px;
   background: var(--main_color);
   position: relative;
   transition: 0.35s all ease;
@@ -73,6 +74,7 @@ header {
   content: "";
   top: -10px;
   left: 0;
+  border-radius: 5px;
   width: 30px;
   height: 4px;
   background: var(--main_color);
@@ -89,6 +91,7 @@ header {
   content: "";
   top: 10px;
   left: 0;
+  border-radius: 5px;
   width: 30px;
   height: 4px;
   background: var(--main_color);

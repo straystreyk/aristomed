@@ -24,8 +24,9 @@ app.set("views", path.resolve(__dirname, "frontend", "pages"));
 app.use(express.static(path.resolve(__dirname, "frontend", "static")));
 
 app.use(async function (req, res) {
-  const headerText = await get_texts("header");
-  const footer = await get_texts("footer");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+
   const js = [];
   const css = [];
 

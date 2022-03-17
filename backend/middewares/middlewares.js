@@ -23,9 +23,11 @@ const breadcrumbsI18N = {
   doctors: "Наши врачи",
   services: "Услуги и цены",
 };
+
 export const bread_crumbs = (req, res, next) => {
   const urls = req.originalUrl.split("/");
   req.breadcrumbs = urls.map((url, i) => {
+    if (url.includes("?")) url = url.split("?")[0];
     return {
       breadcrumbName: url === "" ? "Главная" : breadcrumbsI18N[url],
       breadcrumbUrl: url === "" ? "/" : `${urls.slice(0, i + 1).join("/")}`,

@@ -11,6 +11,7 @@
 .doctor_post {
     font-size: 18px;
     color: #676767;
+    font-weight: 600;
     line-height: 22px;
     margin-bottom: 46px;
 }
@@ -44,6 +45,7 @@
 .doctor_detail_wrapper {
     display: flex;
     margin-top: 30px;
+    justify-content: space-between;
 }
 
 .doctor_info_wrapper {
@@ -64,4 +66,45 @@
 
 .doctors_image img {
     width: 100%;
+}
+
+@media (max-width: 1300px) {
+    .doctors_image {
+        width: 400px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .doctor_detail_wrapper {
+        flex-direction: column;
+    }
+    .doctors_image {
+        order: -1;
+        margin-left: 0;
+        max-width: 500px;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 767px) {
+    .doctors_name a.button {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .doctors_education_item br {
+        display: block!important;
+    }
+    .doctors_name br{
+        display: block;
+    }
+    .doctors_name h1 {
+        font-size: 28px;
+        line-height: 32px;
+    }
+    .doctors_education_item .title {
+        line-height: 24px;
+    }
 }

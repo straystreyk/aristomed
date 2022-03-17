@@ -21,8 +21,12 @@ router.get("/", async (req, res) => {
   const headerText = await get_texts({ page: "header" });
   const footer = await get_texts({ page: "footer" });
 
-  const js = ["/js/main-page.js"];
-  const css = ["/css/main-page.css", "/css/fixed-socials.css"];
+  const js = ["/js/swiper.js", "/js/main-page.js"];
+  const css = [
+    "/css/swiper.css",
+    "/css/fixed-socials.css",
+    "/css/main-page.css",
+  ];
 
   user = req.user ? req.user : false;
   if (req.user && req.user.roles.includes("ADMIN")) {
@@ -54,18 +58,18 @@ router.get("/doctors", async (req, res) => {
 
   let params = [
     {
-      $lookup: {
-        from: "medicine_directions",
-        localField: "medicine_direction_ids",
-        foreignField: "_id",
-        as: "medicine_directions",
-      },
-    },
-    {
       $facet: {
-        // if u need pagination
         // data: [{ $skip: skip }, { $limit: limit }],
-        data: [],
+        data: [
+          {
+            $lookup: {
+              from: "medicine_directions",
+              localField: "medicine_direction_ids",
+              foreignField: "_id",
+              as: "medicine_directions",
+            },
+          },
+        ],
         metadata: [
           {
             $group: {
