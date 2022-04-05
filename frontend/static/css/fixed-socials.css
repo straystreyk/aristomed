@@ -16,6 +16,11 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
+.fixed_socials .fixed_social svg {
+    max-width: 24px;
+    height: auto;
+}
+
 .fixed_socials .fixed_social:hover {
     transform: translateX(-5px);
 }

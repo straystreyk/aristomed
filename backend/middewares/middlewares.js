@@ -22,6 +22,7 @@ export const check_role = (req, res, next) => {
 const breadcrumbsI18N = {
   doctors: "Наши врачи",
   services: "Услуги и цены",
+  contacts: "Контакты",
 };
 
 export const bread_crumbs = (req, res, next) => {

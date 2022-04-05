@@ -273,6 +273,39 @@ router.get("/services/:urlName", async (req, res) => {
   });
 });
 
+router.get("/contacts", async (req, res) => {
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const pageText = await get_texts({ page: "main" });
+  const breadcrumbs = req.breadcrumbs;
+
+  const js = [];
+  const css = [
+    "/css/fixed-socials.css",
+    "/css/contacts.css",
+    "/css/breadcrumbs.css",
+  ];
+
+  user = req.user ? req.user : false;
+  if (req.user && req.user.roles.includes("ADMIN")) {
+    isAdmin = true;
+    js.push("/js/admin.js");
+    css.push("/css/admin.css");
+  }
+
+  res.render("contacts", {
+    title: "Контакты",
+    resources: { css, js },
+    isAdmin,
+    pageText,
+    user,
+    linkActive: "/contacts",
+    headerText,
+    footer,
+    breadcrumbs,
+  });
+});
+
 //admin
 router.get("/admin/auth", async (req, res) => {
   if (req.user) return res.redirect("/");
