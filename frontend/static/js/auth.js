@@ -16,32 +16,34 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  auth_form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  if (auth_form) {
+    auth_form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const data = get_data();
-    if (!data.login || !data.password) {
-      return;
-    }
+      const data = get_data();
+      if (!data.login || !data.password) {
+        return;
+      }
 
-    try {
-      const login = await fetch("/admin/auth/login", {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      try {
+        const login = await fetch("/admin/auth/login", {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
 
-      const res = await login.json();
-      document.cookie = `token=${res.token}; path=/`;
-      clear_inputs();
-      window.location.reload();
-    } catch (e) {
-      console.log(e);
-    }
-  });
+        const res = await login.json();
+        document.cookie = `token=${res.token}; path=/`;
+        clear_inputs();
+        window.location.reload();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  }
 
   // Готовая регистрация
   // const register_btn = document.querySelector(".register_btn");

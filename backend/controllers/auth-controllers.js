@@ -2,11 +2,16 @@ import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 
 import { Role } from "../models/Role.js";
 import { User } from "../models/User.js";
+import { Doctor } from "../models/Doctor.js";
+import { Service } from "../models/Service.js";
+import { MedicineDirection } from "../models/MedicineDirections.js";
 
 dotenv.config();
+const db = mongoose.connection;
 
 export const registration = async (req, res) => {
   try {
@@ -66,4 +71,132 @@ const generate_access_token = (id, roles, name) => {
     name,
   };
   return jwt.sign(payload, process.env.SECRET_JWT, { expiresIn: "24h" });
+};
+
+export const create_doctor = async (req, res) => {
+  try {
+    const doctor = new Doctor({ ...req.body });
+    await doctor.save();
+    res.json({
+      message: "Врач был успешно создан",
+      redirect: "/admin/auth/doctors",
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+export const update_doctor = async (req, res) => {
+  const { _id, ...rest } = req.body;
+  try {
+    await db
+      .collection("doctors")
+      .updateOne({ _id: mongoose.Types.ObjectId(_id) }, { $set: { ...rest } });
+    return res.json({
+      message: "Врач был успешно обновлен",
+      redirect: "/admin/auth/doctors",
+    });
+  } catch (e) {
+    return res.json({ message: e.message });
+  }
+};
+
+export const delete_doctor = async (req, res) => {
+  try {
+    await db
+      .collection("doctors")
+      .deleteOne({ _id: mongoose.Types.ObjectId(req.body._id) });
+    return res.json({
+      message: "Врач был успешно удален",
+      redirect: "/admin/auth/doctors",
+    });
+  } catch (e) {
+    return res.json({ message: e.message });
+  }
+};
+
+export const create_medicine_direction = async (req, res) => {
+  try {
+    const medicine_direction = new MedicineDirection({ ...req.body });
+    await medicine_direction.save();
+    return res.json({
+      message: "Медецинское направление было успешно удален",
+      redirect: "/admin/auth/medicine_directions",
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+export const update_medicine_direction = async (req, res) => {
+  const { _id, ...rest } = req.body;
+  try {
+    await db
+      .collection("medicine_directions")
+      .updateOne({ _id: mongoose.Types.ObjectId(_id) }, { $set: { ...rest } });
+    return res.json({
+      message: "Медецинское направление было успешно обновлен",
+      redirect: "/admin/auth/medicine_directions",
+    });
+  } catch (e) {
+    return res.json({ message: e.message });
+  }
+};
+
+export const delete_medicine_direction = async (req, res) => {
+  try {
+    await db
+      .collection("medicine_directions")
+      .deleteOne({ _id: mongoose.Types.ObjectId(req.body._id) });
+    return res.json({
+      message: "Медецинское направление было успешно удалено",
+      redirect: "/admin/auth/medicine_directions",
+    });
+  } catch (e) {
+    return res.json({ message: e.message });
+  }
+};
+
+export const create_services = async (req, res) => {
+  try {
+    console.log(req.body);
+    const service = new Service({ ...req.body });
+    await service.save();
+    return res.json({
+      message: "Медецинское услуга была успешно создана",
+      redirect: "/admin/auth/services",
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+export const update_services = async (req, res) => {
+  const { _id, ...rest } = req.body;
+  console.log(req.body);
+  try {
+    await db
+      .collection("services")
+      .updateOne({ _id: mongoose.Types.ObjectId(_id) }, { $set: { ...rest } });
+    return res.json({
+      message: "Медицинская услуга была обновлена",
+      redirect: "/admin/auth/services",
+    });
+  } catch (e) {
+    return res.json({ message: e.message });
+  }
+};
+
+export const delete_services = async (req, res) => {
+  try {
+    await db
+      .collection("services")
+      .deleteOne({ _id: mongoose.Types.ObjectId(req.body._id) });
+    return res.json({
+      message: "Медецинская услуга была успешно удалено",
+      redirect: "/admin/auth/services",
+    });
+  } catch (e) {
+    return res.json({ message: e.message });
+  }
 };

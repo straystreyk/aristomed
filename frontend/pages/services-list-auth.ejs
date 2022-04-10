@@ -1,0 +1,21 @@
+<%- include('../components/header') %>
+<div class="container">
+    <table>
+        <tr><th>Имя</th><th>Редактирование</th>
+            <%services.forEach(el => {%>
+        <tr><td><%=el.description%></td>
+            <td>
+                <a class="waves-effect waves-light btn-small" href="/admin/auth/services/<%=el._id%>">Редактировать</a>
+                <button data-id="<%=el._id%>" class="deleteResource waves-effect waves-light red btn-small">Удалить</button>
+                <a class="waves-effect waves-light btn-small" href="/admin/auth/services/create">Создать услугу</a></td></tr>
+        <%})%>
+    </table>
+</div>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+    </div>
+</div>
+<script>
+    window.url = <%-JSON.stringify(fetch_url)%>
+</script>
+<%- include('../components/footer') %>

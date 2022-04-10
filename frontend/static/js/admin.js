@@ -94,7 +94,7 @@ window.addEventListener("DOMContentLoaded", () => {
       edit_area.selectionStart,
       edit_area.selectionEnd
     );
-    console.log(current);
+
     if (current.includes(left_tag) && current.includes(right_tag)) {
       current = current.slice(
         left_tag.length,

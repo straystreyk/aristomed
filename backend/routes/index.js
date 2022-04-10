@@ -3,7 +3,19 @@ import { Router } from "express";
 import { Controllers } from "../controllers/controllers.js";
 import { check } from "express-validator";
 import { bread_crumbs, check_role } from "../middewares/middlewares.js";
-import { aggregate, get_all } from "../controllers/get-controllers.js";
+import { aggregate, get_all, get_one } from "../controllers/get-controllers.js";
+import {
+  create_doctor,
+  create_medicine_direction,
+  create_services,
+  delete_doctor,
+  delete_medicine_direction,
+  delete_services,
+  update_doctor,
+  update_medicine_direction,
+  update_services,
+} from "../controllers/auth-controllers.js";
+import multer from "multer";
 
 const { login, registration, get_texts, update_text, cacheControl, test } =
   Controllers;
@@ -326,6 +338,364 @@ router.get("/admin/auth", async (req, res) => {
   });
 });
 
+router.get("/admin/auth/doctors", async (req, res) => {
+  if (!req.user || !req.user.roles.includes("ADMIN")) return res.redirect("/");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+
+  let params = [
+    {
+      $facet: {
+        // data: [{ $skip: skip }, { $limit: limit }],
+        data: [
+          {
+            $lookup: {
+              from: "medicine_directions",
+              localField: "medicine_direction_ids",
+              foreignField: "_id",
+              as: "medicine_directions",
+            },
+          },
+        ],
+        metadata: [
+          {
+            $group: {
+              _id: null,
+              total: { $sum: 1 },
+            },
+          },
+        ],
+      },
+    },
+  ];
+
+  const doctors = await aggregate("doctors", params);
+
+  const js = ["/js/auth.js", "/js/admin.js", "/js/doctors-list-auth.js"];
+  const css = ["/css/auth.css", "/css/admin.css"];
+
+  user = req.user ?? false;
+  isAdmin = true;
+
+  res.render("doctors-list-auth", {
+    title: "admin",
+    resources: {
+      css,
+      js,
+    },
+    linkActive: "",
+    isAdmin,
+    fetch_url: "/admin/auth/doctors/delete",
+    headerText,
+    footer,
+    doctors: doctors[0],
+    user,
+  });
+});
+
+router.get("/admin/auth/doctors/create", async (req, res) => {
+  if (!req.user || !req.user.roles.includes("ADMIN")) return res.redirect("/");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const directions = await get_all("medicine_directions");
+
+  const js = ["/js/auth.js", "/js/admin.js", "/js/doctor-create.js"];
+  const css = ["/css/auth.css", "/css/admin.css"];
+
+  user = req.user ?? false;
+  isAdmin = true;
+
+  res.render("doctors-create-auth", {
+    title: "admin",
+    resources: {
+      css,
+      js,
+    },
+    linkActive: "",
+    isAdmin,
+    fetch_url: "/admin/auth/doctors/create",
+    headerText,
+    directions,
+    footer,
+    user,
+  });
+});
+
+router.get("/admin/auth/doctors/:id", async (req, res) => {
+  if (!req.user || !req.user.roles.includes("ADMIN")) return res.redirect("/");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const directions = await get_all("medicine_directions");
+  const currentDoctor = await aggregate("doctors", [
+    {
+      $lookup: {
+        from: "medicine_directions",
+        localField: "medicine_direction_ids",
+        foreignField: "_id",
+        as: "medicine_directions",
+      },
+    },
+    { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
+  ]);
+
+  const js = ["/js/auth.js", "/js/admin.js", "/js/doctor-create.js"];
+  const css = ["/css/auth.css", "/css/admin.css"];
+
+  user = req.user ?? false;
+  isAdmin = true;
+
+  res.render("doctor-edit-auth", {
+    title: "admin",
+    resources: {
+      css,
+      js,
+    },
+    linkActive: "",
+    isAdmin,
+    headerText,
+    directions,
+    fetch_url: "/admin/auth/doctors/edit",
+    currentDoctor: currentDoctor[0],
+    footer,
+    user,
+  });
+});
+
+router.get("/admin/auth/medicine_directions", async (req, res) => {
+  if (!req.user || !req.user.roles.includes("ADMIN")) return res.redirect("/");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const directions = await get_all("medicine_directions");
+
+  const js = ["/js/auth.js", "/js/admin.js", "/js/doctors-list-auth.js"];
+  const css = ["/css/auth.css", "/css/admin.css"];
+
+  user = req.user ?? false;
+  isAdmin = true;
+
+  res.render("medicine-directions-list-auth", {
+    title: "admin",
+    resources: {
+      css,
+      js,
+    },
+    linkActive: "",
+    isAdmin,
+    headerText,
+    fetch_url: "/admin/auth/medicine_directions/delete",
+    directions,
+    footer,
+    user,
+  });
+});
+
+router.get("/admin/auth/medicine_directions/create", async (req, res) => {
+  if (!req.user || !req.user.roles.includes("ADMIN")) return res.redirect("/");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+
+  const js = ["/js/auth.js", "/js/admin.js", "/js/doctor-create.js"];
+  const css = ["/css/auth.css", "/css/admin.css"];
+
+  user = req.user ?? false;
+  isAdmin = true;
+
+  res.render("medicine-directions-create-auth", {
+    title: "admin",
+    resources: {
+      css,
+      js,
+    },
+    linkActive: "",
+    isAdmin,
+    fetch_url: "/admin/auth/medicine_directions/create",
+    headerText,
+    footer,
+    user,
+  });
+});
+
+router.get("/admin/auth/medicine_directions/:urlName", async (req, res) => {
+  if (!req.user || !req.user.roles.includes("ADMIN")) return res.redirect("/");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const currentDirection = await aggregate("medicine_directions", [
+    {
+      $lookup: {
+        from: "services",
+        localField: "_id",
+        foreignField: "medicineDirectionsIds",
+        as: "services",
+      },
+    },
+    {
+      $match: {
+        urlName: req.params.urlName,
+      },
+    },
+  ]);
+
+  const js = ["/js/auth.js", "/js/admin.js", "/js/doctor-create.js"];
+  const css = ["/css/auth.css", "/css/admin.css"];
+
+  user = req.user ?? false;
+  isAdmin = true;
+
+  res.render("medicine-directions-edit-auth", {
+    title: "admin",
+    resources: {
+      css,
+      js,
+    },
+    linkActive: "",
+    isAdmin,
+    headerText,
+    fetch_url: "/admin/auth/medicine_directions/edit",
+    currentDirection: currentDirection[0],
+    footer,
+    user,
+  });
+});
+
+router.get("/admin/auth/services", async (req, res) => {
+  if (!req.user || !req.user.roles.includes("ADMIN")) return res.redirect("/");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const services = await get_all("services");
+
+  const js = ["/js/auth.js", "/js/admin.js", "/js/doctors-list-auth.js"];
+  const css = ["/css/auth.css", "/css/admin.css"];
+
+  user = req.user ?? false;
+  isAdmin = true;
+
+  res.render("services-list-auth", {
+    title: "admin",
+    resources: {
+      css,
+      js,
+    },
+    linkActive: "",
+    isAdmin,
+    headerText,
+    fetch_url: "/admin/auth/services/delete",
+    services,
+    footer,
+    user,
+  });
+});
+
+router.get("/admin/auth/services/create", async (req, res) => {
+  if (!req.user || !req.user.roles.includes("ADMIN")) return res.redirect("/");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const directions = await get_all("medicine_directions");
+
+  const js = ["/js/auth.js", "/js/admin.js", "/js/doctor-create.js"];
+  const css = ["/css/auth.css", "/css/admin.css"];
+
+  user = req.user ?? false;
+  isAdmin = true;
+
+  res.render("services-create-auth", {
+    title: "admin",
+    resources: {
+      css,
+      js,
+    },
+    linkActive: "",
+    isAdmin,
+    headerText,
+    directions,
+    fetch_url: "/admin/auth/services/create",
+    footer,
+    user,
+  });
+});
+
+router.get("/admin/auth/services/:id", async (req, res) => {
+  if (!req.user || !req.user.roles.includes("ADMIN")) return res.redirect("/");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const directions = await get_all("medicine_directions");
+  const currentService = await get_one("services", {
+    _id: mongoose.Types.ObjectId(req.params.id),
+  });
+
+  const js = ["/js/auth.js", "/js/admin.js", "/js/doctor-create.js"];
+  const css = ["/css/auth.css", "/css/admin.css"];
+
+  user = req.user ?? false;
+  isAdmin = true;
+
+  res.render("services-edit-auth", {
+    title: "admin",
+    resources: {
+      css,
+      js,
+    },
+    linkActive: "",
+    isAdmin,
+    headerText,
+    currentService,
+    directions,
+    fetch_url: "/admin/auth/services/edit",
+    footer,
+    user,
+  });
+});
+
+router.get("/admin/panel", async (req, res) => {
+  if (!req.user || !req.user.roles.includes("ADMIN")) return res.redirect("/");
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+
+  const js = ["/js/auth.js", "/js/admin.js"];
+  const css = ["/css/auth.css", "/css/admin.css"];
+
+  res.render("admin", {
+    title: "admin",
+    resources: {
+      css,
+      js,
+    },
+    linkActive: "",
+    isAdmin,
+    headerText,
+    footer,
+    user,
+  });
+});
+
+const storage = multer.diskStorage({
+  destination: (req, res, cb) => {
+    cb(null, "./frontend/static/images/doctors");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+router.post("/admin/auth/doctors/create", create_doctor);
+router.post("/admin/auth/doctors/edit", update_doctor);
+router.post("/admin/auth/doctors/delete", delete_doctor);
+router.post(
+  "/admin/auth/medicine_directions/create",
+  create_medicine_direction
+);
+router.post("/admin/auth/medicine_directions/edit", update_medicine_direction);
+router.post(
+  "/admin/auth/medicine_directions/delete",
+  delete_medicine_direction
+);
+router.post("/admin/auth/services/create", create_services);
+router.post("/admin/auth/services/edit", update_services);
+router.post("/admin/auth/services/delete", delete_services);
+router.post("/image_uploader", upload.single("file"), (req, res) => {
+  res.json({ url: `/images/doctors/${req.file.originalname}` });
+});
 //------------API---------------
 
 //Search
@@ -334,9 +704,6 @@ router.get("/admin/auth", async (req, res) => {
 //
 //     res.json(data)
 // })
-
-//Test
-router.post("/test", test);
 
 //Text
 router.post("/text_update", update_text);

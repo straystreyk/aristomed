@@ -39,8 +39,8 @@ const DoctorSchema = new Schema({
   },
   education: [
     {
-      type: [EducationSchema],
-      required: false,
+      title: String,
+      description: [String],
     },
   ],
   medicine_direction_ids: [

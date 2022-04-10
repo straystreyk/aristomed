@@ -103,6 +103,11 @@ const links = [
             <%if(user) {%>
             <div class="user_interface">
                 <p>Здравствуйте, <b><%= user.name ? user.name : "" %></b></p>
+                <%if (user.roles.includes("ADMIN")) {%>
+                    <a class="button" href="/admin/panel">
+                        Админ панель
+                    </a>
+                <%}%>
                 <div class="exit_account">
                     Выйти
                 </div>

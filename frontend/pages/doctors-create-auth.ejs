@@ -1,0 +1,75 @@
+<%- include('../components/header') %>
+<div class="container">
+    <div class="row">
+        <form class="form_create col s12" >
+            <div class="row">
+                <div class="input-field col s12">
+                    <input required id="name" name="name" type="text" class="validate form_input">
+                    <label for="name">Имя</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input required id="surname" name="surname" type="text" class="validate form_input">
+                    <label for="surname">Фамилия</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="middle_name" name="middle_name" type="text" class="validate form_input">
+                    <label for="middle_name">Отчество</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="sex" name="sex" class="form_input">
+                        <option value="male">Мужчина</option>
+                        <option value="female">Женщина</option>
+                    </select>
+                    <label for="sex">Пол</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select multiple name="medicine_direction_ids" class="form_input">
+                        <%directions.forEach(el => {%>
+                            <option value=<%=el._id%>><%=el.name%></option>
+                        <%})%>
+                    </select>
+                    <label>Медицинские направления</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="data-more-parent form_input" data-more-target="education">
+                    Образование
+                </div>
+                <button class="add_more waves-effect waves-light btn-small" data-more="education">Добавить еще образование</button>
+            </div>
+            <div class="row">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>Фото врача</span>
+                        <input type="file" name="file" class="file_input">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="image" value="" class="image_url_input form_input">
+            <div class="row">
+             <button type="submit" class="waves-effect btn-small">Создать</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<script>
+    window.url = <%-JSON.stringify(fetch_url)%>
+</script>
+<%- include('../components/footer') %>

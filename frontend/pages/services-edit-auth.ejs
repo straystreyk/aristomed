@@ -1,0 +1,39 @@
+<%- include('../components/header') %>
+<div class="container">
+    <div class="row">
+        <form class="form_create col s12" >
+            <div class="row">
+                <div class="input-field col s12">
+                    <input required id="description" value="<%=currentService.description%>" name="description" type="text" class="validate form_input">
+                    <label for="description">Описание услуги</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input required id="price" value="<%=currentService.price%>" name="price" type="number" class="validate form_input">
+                    <label for="price">Цена</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select multiple name="medicineDirectionsIds" class="form_input">
+                        <%directions.forEach(el => {%>
+                        <option <%if (currentService.medicineDirectionsIds && currentService.medicineDirectionsIds.map(el => el.toString()).includes(el._id.toString())) {%>selected<%}%> value=<%=el._id%>><%=el.name%></option>
+                        <%})%>
+                    </select>
+                    <label>Медицинские направления</label>
+                </div>
+            </div>
+            <input type="hidden" value="<%=currentService._id%>" name="_id" class="form_input">
+            <button class="waves-effect waves-light btn-small" type="submit">Редактировать</button>
+        </form>
+    </div>
+</div>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+    </div>
+</div>
+<script>
+    window.url = <%-JSON.stringify(fetch_url)%>
+</script>
+<%- include('../components/footer') %>

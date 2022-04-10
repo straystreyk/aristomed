@@ -1,0 +1,20 @@
+<%- include('../components/header') %>
+<div class="container">
+    <table>
+        <tr><th>Имя</th><th>Редактирование</th>
+        <%doctors.data.forEach(el => {%>
+            <tr><td><%=el.surname%> <%=el.name%> <%=el.middle_name%></td><td><a class="waves-effect waves-light btn-small" href="/admin/auth/doctors/<%=el._id%>">Редактировать</a>
+                <button data-id="<%=el._id%>" class="deleteResource waves-effect waves-light btn-small red">Удалить</button>
+                <a class="waves-effect waves-light btn-small" href="/admin/auth/doctors/create">Создать врача</a></td></tr>
+        <%})%>
+    </table>
+</div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+    </div>
+</div>
+<script>
+    window.url = <%-JSON.stringify(fetch_url)%>
+</script>
+<%- include('../components/footer') %>

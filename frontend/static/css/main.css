@@ -147,8 +147,8 @@ main {
 
 .user_interface {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  bottom: 20px;
+  right: 20px;
   z-index: 6;
   display: flex;
   flex-direction: column;
