@@ -103,9 +103,10 @@ export const update_doctor = async (req, res) => {
       },
       {
         $set: {
-          medicine_direction_ids: medicine_direction_ids.length
-            ? medicine_direction_ids.map((el) => mongoose.Types.ObjectId(el))
-            : [],
+          medicine_direction_ids:
+            medicine_direction_ids && medicine_direction_ids.length
+              ? medicine_direction_ids.map((el) => mongoose.Types.ObjectId(el))
+              : [],
           ...rest,
         },
       }
@@ -190,12 +191,21 @@ export const create_services = async (req, res) => {
 };
 
 export const update_services = async (req, res) => {
-  const { _id, ...rest } = req.body;
+  const { _id, medicineDirectionsIds, ...rest } = req.body;
 
   try {
-    await db
-      .collection("services")
-      .updateOne({ _id: mongoose.Types.ObjectId(_id) }, { $set: { ...rest } });
+    await db.collection("services").updateOne(
+      { _id: mongoose.Types.ObjectId(_id) },
+      {
+        $set: {
+          medicineDirectionsIds:
+            medicineDirectionsIds && medicineDirectionsIds.length
+              ? medicineDirectionsIds.map((el) => mongoose.Types.ObjectId(el))
+              : [],
+          ...rest,
+        },
+      }
+    );
     return res.json({
       message: "Медицинская услуга была обновлена",
       redirect: "/admin/auth/services",

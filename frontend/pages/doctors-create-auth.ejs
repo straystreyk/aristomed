@@ -31,6 +31,12 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
+                    <input id="experience" name="experience" type="text" class="validate form_input">
+                    <label for="experience">Стаж</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
                     <select multiple name="medicine_direction_ids" class="form_input">
                         <%directions.forEach(el => {%>
                             <option value=<%=el._id%>><%=el.name%></option>

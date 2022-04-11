@@ -199,7 +199,7 @@ router.get("/doctors/:id", async (req, res) => {
 router.get("/services", async (req, res) => {
   const headerText = await get_texts({ page: "header" });
   const footer = await get_texts({ page: "footer" });
-  const directions = await get_all("medicine_directions");
+  const directions = await get_all("medicine_directions", {}, { name: 1 });
   const breadcrumbs = req.breadcrumbs;
 
   const js = [];

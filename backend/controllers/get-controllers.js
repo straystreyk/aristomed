@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 const db = mongoose.connection;
 
-export const get_all = async (collection, filters = {}) => {
+export const get_all = async (collection, filters = {}, sort = {}) => {
   return db
     .collection(collection)
     .find({ ...filters })
+    .sort({ ...sort })
     .toArray();
 };
 

@@ -23,10 +23,16 @@
             <div class="row">
                 <div class="input-field col s12">
                     <select id="sex" name="sex" class="form_input">
-                        <option selected="<%currentDoctor.sex === "male"%>" value="male">Мужчина</option>
-                        <option selected="<%currentDoctor.sex === "female"%>" value="female">Женщина</option>
+                        <option <% if (currentDoctor.sex === "male") {%>selected <%}%> value="male">Мужчина</option>
+                        <option <% if (currentDoctor.sex === "female") {%>selected <%}%> value="female">Женщина</option>
                     </select>
                     <label for="sex">Пол</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="experience" value="<%=currentDoctor.experience%>" name="experience" type="text" class="validate form_input">
+                    <label for="experience">Стаж</label>
                 </div>
             </div>
             <div class="row">
