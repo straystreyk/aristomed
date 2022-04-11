@@ -2,17 +2,6 @@ import pkg from "mongoose";
 
 const { Schema, model } = pkg;
 
-const EducationSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: [String],
-    required: true,
-  },
-});
-
 const DoctorSchema = new Schema({
   name: {
     type: String,
@@ -43,9 +32,7 @@ const DoctorSchema = new Schema({
       description: [String],
     },
   ],
-  medicine_direction_ids: [
-    { type: Schema.Types.ObjectId, ref: "Medicine_Direction", required: false },
-  ],
+  medicine_direction_ids: [Schema.Types.ObjectId],
   image: {
     type: String,
   },

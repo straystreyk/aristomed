@@ -74,8 +74,15 @@ const generate_access_token = (id, roles, name) => {
 };
 
 export const create_doctor = async (req, res) => {
+  const { medicine_direction_ids, ...rest } = req.body;
+
   try {
-    const doctor = new Doctor({ ...req.body });
+    const doctor = new Doctor({
+      medicine_direction_ids: medicine_direction_ids.map((el) =>
+        mongoose.Types.ObjectId(el)
+      ),
+      ...rest,
+    });
     await doctor.save();
     res.json({
       message: "Врач был успешно создан",
@@ -87,11 +94,22 @@ export const create_doctor = async (req, res) => {
 };
 
 export const update_doctor = async (req, res) => {
-  const { _id, ...rest } = req.body;
+  const { _id, medicine_direction_ids, ...rest } = req.body;
+
   try {
-    await db
-      .collection("doctors")
-      .updateOne({ _id: mongoose.Types.ObjectId(_id) }, { $set: { ...rest } });
+    await db.collection("doctors").updateOne(
+      {
+        _id: mongoose.Types.ObjectId(_id),
+      },
+      {
+        $set: {
+          medicine_direction_ids: medicine_direction_ids.length
+            ? medicine_direction_ids.map((el) => mongoose.Types.ObjectId(el))
+            : [],
+          ...rest,
+        },
+      }
+    );
     return res.json({
       message: "Врач был успешно обновлен",
       redirect: "/admin/auth/doctors",
@@ -173,7 +191,7 @@ export const create_services = async (req, res) => {
 
 export const update_services = async (req, res) => {
   const { _id, ...rest } = req.body;
-  console.log(req.body);
+
   try {
     await db
       .collection("services")
