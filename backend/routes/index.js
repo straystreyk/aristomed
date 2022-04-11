@@ -81,6 +81,7 @@ router.get("/doctors", async (req, res) => {
               as: "medicine_directions",
             },
           },
+          { $sort: { name: 1 } },
         ],
         metadata: [
           {
