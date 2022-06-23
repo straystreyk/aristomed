@@ -23,6 +23,7 @@ const breadcrumbsI18N = {
   doctors: "Наши врачи",
   services: "Услуги и цены",
   contacts: "Контакты",
+  about: "О нас",
 };
 
 export const bread_crumbs = (req, res, next) => {

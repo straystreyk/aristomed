@@ -52,8 +52,9 @@ window.addEventListener("DOMContentLoaded", () => {
     file_input.addEventListener("change", async () => {
       const formData = new FormData();
       formData.append("file", file_input.files[0]);
+      formData.append("type", file_input.dataset.type);
       try {
-        const res = await fetch("/image_uploader", {
+        const res = await fetch(`/image_uploader/${file_input.dataset.type}`, {
           method: "POST",
           body: formData,
         });
@@ -66,6 +67,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
   if (form_create) {
     form_create.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -100,7 +102,8 @@ window.addEventListener("DOMContentLoaded", () => {
           });
           return;
         }
-        if (!!el.value || el.name === "image") {
+
+        if (el.name || el.name === "image") {
           data[el.name] = el.value;
         }
       });
@@ -116,6 +119,8 @@ window.addEventListener("DOMContentLoaded", () => {
       if (Object.keys(values).length) {
         data = { ...data, ...values };
       }
+
+      console.log(data);
 
       try {
         const res = await fetch(window.url, {

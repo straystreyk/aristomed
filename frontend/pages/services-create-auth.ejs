@@ -24,6 +24,16 @@
                     <label>Медицинские направления</label>
                 </div>
             </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select multiple name="popularForDirectionsIds" class="form_input">
+                        <%directions.forEach(el => {%>
+                            <option value=<%=el._id%>><%=el.name%></option>
+                        <%})%>
+                    </select>
+                    <label>Популярная услуга для следующих медецинских направлений</label>
+                </div>
+            </div>
             <button class="waves-effect waves-light btn-small" type="submit">Создать</button>
         </form>
     </div>

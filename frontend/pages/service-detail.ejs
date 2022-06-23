@@ -1,9 +1,62 @@
 <%- include('../components/header') %>
 <%- include('../components/fixed-socials') %>
 <%- include('../components/breadcrumbs') %>
+<%
+    const popularServices = []
+    if (currentDirection[0].services && currentDirection[0].services.length) {
+        currentDirection[0].services.forEach((el, num) => {
+            if (el.popularForDirectionsIds && el.popularForDirectionsIds.length) {
+                el.popularForDirectionsIds.forEach(popular => {
+                    if (popular.toString() === currentDirection[0]._id.toString()) {
+                        popularServices.push(el)
+                    }
+                })
+            }
+        })
+    }
+%>
 <section class="service_section">
     <div class="container">
         <h2><%=currentDirection[0].name%></h2>
+        <div class="medicine_direction_info_wrapper">
+            <div class="medicine_direction_info">
+                <%if (currentDirection[0].slogan) {%>
+                    <span class="medicine_direction_title slogan"><%=currentDirection[0].slogan%></span>
+                <%}%>
+                <%if (currentDirection[0].description) {%>
+                    <div class="medicine_direction_description"><%-currentDirection[0].description%></div>
+                <%}%>
+                <%popularServices.forEach((popular, index) => { %>
+                    <%if (index === 0) {%>
+                        <span class="medicine_direction_title">Популярные услуги</span>
+                        <div class="popular_services">
+                    <%}%>
+                        <div class="popular_service"><%=popular.description.split(",")[0]%></div>
+                    <%if(index === popularServices.length - 1) {%>
+                        </div>
+                    <%}%>
+                <%})%>
+                <%if (currentDirection[0].reasons && currentDirection[0].reasons.length) {%>
+                    <span class="medicine_direction_title margin <%if (currentDirection[0].reasons.length > 2) {%>got_three<%}%>">Повод обратиться</span>
+                    <%if (currentDirection[0].descriptionReasons) {%>
+                      <div class="medicine_direction_description <%if (currentDirection[0].reasons.length > 2) {%>got_three<%}%>"><%-currentDirection[0].descriptionReasons%></div>
+                    <%}%>
+                <%}%>
+            </div>
+            <%if (currentDirection[0].image) {%>
+                <div class="medicine_direction_image">
+                    <img data-src="<%=currentDirection[0].image%>" src="" alt=""/>
+                </div>
+            <%}%>
+        </div>
+        <%if (currentDirection[0].reasons && currentDirection[0].reasons.length) {%>
+            <div class="medicine_direction_problems <%if (currentDirection[0].reasons.length > 4) {%>got_five<%}%>">
+                <%currentDirection[0].reasons.forEach(el => {%>
+                    <div class="medicine_dirction_problem"><%=el%></div>
+                <%})%>
+            </div>
+        <%}%>
+        <div class="medicine_direction_title margin">Цены</div>
         <div class="service_section__content">
         <%currentDirection[0].services.forEach(el => {%>
                 <div class="service">

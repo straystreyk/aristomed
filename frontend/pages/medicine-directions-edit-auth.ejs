@@ -32,6 +32,43 @@
                     <label for="hoverColor">Цвет при наведении в HEX</label>
                 </div>
             </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea name="description" id="description" type="text" class="validate materialize-textarea form_input"><%-currentDirection.description%></textarea>
+                    <label for="description">Описание на посадочной странице (под слоганом)</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="slogan" value="<%=currentDirection.slogan%>" name="slogan" type="text" class="validate form_input">
+                    <label for="slogan">Слоган</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="reasons" name="reasons" value="<%=currentDirection.reasons && currentDirection.reasons.length ? currentDirection.reasons.join(", ") : ""%>" type="text" class="validate form_input">
+                    <label for="reasons">Решаемые проблемы</label>
+                    <span class="helper-text">Перечислить через запятую</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea name="descriptionReasons" id="descriptionReasons" type="text" class="validate materialize-textarea form_input"><%-currentDirection.descriptionReasons%></textarea>
+                    <label for="descriptionReasons">Описание на посадочной странице (под решаемыми проблемами)</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>Фото на посадочной страницы направления</span>
+                        <input type="file" data-type="directions" name="file" class="file_input">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input value="<%=currentDirection.image%>" class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" value="<%=currentDirection.image%>" name="image" class="image_url_input form_input">
             <input type="hidden" value="<%=currentDirection._id%>" name="_id" class="form_input">
             <button class="waves-effect waves-light btn-small" type="submit">Редактировать</button>
         </form>

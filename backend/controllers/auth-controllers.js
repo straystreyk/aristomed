@@ -136,7 +136,12 @@ export const delete_doctor = async (req, res) => {
 
 export const create_medicine_direction = async (req, res) => {
   try {
-    const medicine_direction = new MedicineDirection({ ...req.body });
+    const medicine_direction = new MedicineDirection({
+      ...req.body,
+      reasons: req.body.reasons
+        ? req.body.reasons.trim().split(",").filter(Boolean)
+        : [],
+    });
     await medicine_direction.save();
     return res.json({
       message: "Медецинское направление было успешно удален",
@@ -148,11 +153,20 @@ export const create_medicine_direction = async (req, res) => {
 };
 
 export const update_medicine_direction = async (req, res) => {
-  const { _id, ...rest } = req.body;
+  const { _id, reasons, ...rest } = req.body;
+
   try {
-    await db
-      .collection("medicine_directions")
-      .updateOne({ _id: mongoose.Types.ObjectId(_id) }, { $set: { ...rest } });
+    await db.collection("medicine_directions").updateOne(
+      { _id: mongoose.Types.ObjectId(_id) },
+      {
+        $set: {
+          reasons: req.body.reasons
+            ? req.body.reasons.trim().split(",").filter(Boolean)
+            : [],
+          ...rest,
+        },
+      }
+    );
     return res.json({
       message: "Медецинское направление было успешно обновлен",
       redirect: "/admin/auth/medicine_directions",
@@ -178,7 +192,6 @@ export const delete_medicine_direction = async (req, res) => {
 
 export const create_services = async (req, res) => {
   try {
-    console.log(req.body);
     const service = new Service({ ...req.body });
     await service.save();
     return res.json({
@@ -191,7 +204,8 @@ export const create_services = async (req, res) => {
 };
 
 export const update_services = async (req, res) => {
-  const { _id, medicineDirectionsIds, ...rest } = req.body;
+  const { _id, medicineDirectionsIds, popularForDirectionsIds, ...rest } =
+    req.body;
 
   try {
     await db.collection("services").updateOne(
@@ -201,6 +215,10 @@ export const update_services = async (req, res) => {
           medicineDirectionsIds:
             medicineDirectionsIds && medicineDirectionsIds.length
               ? medicineDirectionsIds.map((el) => mongoose.Types.ObjectId(el))
+              : [],
+          popularForDirectionsIds:
+            popularForDirectionsIds && popularForDirectionsIds.length
+              ? popularForDirectionsIds.map((el) => mongoose.Types.ObjectId(el))
               : [],
           ...rest,
         },

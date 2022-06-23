@@ -3,7 +3,6 @@ import cors from "cors";
 import path from "path";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import os from "os";
 import dotenv from "dotenv";
 
 import { user } from "./backend/routes/index.js";

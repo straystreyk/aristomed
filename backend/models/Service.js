@@ -14,6 +14,13 @@ const ServiceSchema = new Schema({
   medicineDirectionsIds: [
     { type: Schema.Types.ObjectId, ref: "Medicine_Direction", required: true },
   ],
+  popularForDirectionsIds: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Medicine_Direction",
+      required: false,
+    },
+  ],
 });
 
 export const Service = model("Service", ServiceSchema);

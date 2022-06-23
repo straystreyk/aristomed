@@ -6,6 +6,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
   instances.dropdownOptions.childNodes.forEach((el, index) => {
     if (index === 0) return;
+    el.addEventListener("touchend", (e) => {
+      e.stopPropagation();
+    });
     el.style.borderLeft = `8px solid ${window.colors[index - 1]}`;
   });
 

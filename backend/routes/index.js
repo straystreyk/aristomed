@@ -59,6 +59,41 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.get("/about", async (req, res) => {
+  const pageText = await get_texts({ page: "main" });
+  const headerText = await get_texts({ page: "header" });
+  const footer = await get_texts({ page: "footer" });
+  const breadcrumbs = req.breadcrumbs;
+
+  const js = ["/js/swiper.js", "/js/main-page.js"];
+  const css = [
+    "/css/swiper.css",
+    "/css/fixed-socials.css",
+    "/css/main-page.css",
+    "/css/about.css",
+    "/css/breadcrumbs.css",
+  ];
+
+  user = req.user ? req.user : false;
+  if (req.user && req.user.roles.includes("ADMIN")) {
+    isAdmin = true;
+    js.push("/js/admin.js");
+    css.push("/css/admin.css");
+  }
+
+  res.render("about-page", {
+    title: "О нас",
+    linkActive: "/about",
+    resources: { css, js },
+    pageText,
+    headerText,
+    isAdmin,
+    footer,
+    breadcrumbs,
+    user,
+  });
+});
+
 router.get("/doctors", async (req, res) => {
   const headerText = await get_texts({ page: "header" });
   const footer = await get_texts({ page: "footer" });
@@ -236,16 +271,25 @@ router.get("/services/:urlName", async (req, res) => {
 
   const currentDirection = await aggregate("medicine_directions", [
     {
-      $lookup: {
-        from: "services",
-        localField: "_id",
-        foreignField: "medicineDirectionsIds",
-        as: "services",
-      },
+      $match: { urlName: req.params.urlName },
     },
     {
-      $match: {
-        urlName: req.params.urlName,
+      $lookup: {
+        from: "services",
+        let: {
+          directionId: "$_id",
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $in: ["$$directionId", "$medicineDirectionsIds"] },
+            },
+          },
+          {
+            $sort: { description: 1 },
+          },
+        ],
+        as: "services",
       },
     },
   ]);
@@ -669,15 +713,17 @@ router.get("/admin/panel", async (req, res) => {
 });
 
 const storage = multer.diskStorage({
-  destination: (req, res, cb) => {
-    cb(null, "./frontend/static/images/doctors");
+  destination: async (req, file, cb) => {
+    cb(null, "./frontend/static/images/" + req.params.type);
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+});
 
 router.post("/admin/auth/doctors/create", create_doctor);
 router.post("/admin/auth/doctors/edit", update_doctor);
@@ -694,8 +740,8 @@ router.post(
 router.post("/admin/auth/services/create", create_services);
 router.post("/admin/auth/services/edit", update_services);
 router.post("/admin/auth/services/delete", delete_services);
-router.post("/image_uploader", upload.single("file"), (req, res) => {
-  res.json({ url: `/images/doctors/${req.file.originalname}` });
+router.post("/image_uploader/:type", upload.single("file"), (req, res) => {
+  res.json({ url: "/images" + req.file.path.split("images")[1] });
 });
 //------------API---------------
 

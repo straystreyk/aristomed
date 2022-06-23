@@ -11,18 +11,18 @@
             <div class="doctor_info_wrapper">
                 <div class="doctors_info">
                     <div class="doctor_post">
-                        <p>
-                        <%=currentDoctor.post%>
-                            <%if (currentDoctor.medicine_directions.length){%>
-                                    <%currentDoctor.medicine_directions.forEach((direction, index) => {%>
-                                       <%if (index !== 0) {%><%=direction.doctorDirectionName.charAt(0).toLowerCase() + direction.doctorDirectionName.slice(1)%><%} else {%><%=direction.doctorDirectionName%><%}%><% if(index !== currentDoctor.medicine_directions.length - 1) {%>,<%}%>
-                                    <%})%>
-                            <%}%>
-                        </p>
+<!--                        <p>-->
+<!--                        <%= currentDoctor.post ?? currentDoctor.post%>-->
+<!--                            <%if (currentDoctor.medicine_directions.length){%>-->
+<!--                                    <%currentDoctor.medicine_directions.forEach((direction, index) => {%>-->
+<!--                                       <%if (index !== 0) {%><%=direction.doctorDirectionName.charAt(0).toLowerCase() + direction.doctorDirectionName.slice(1)%><%} else {%><%=direction.doctorDirectionName%><%}%><% if(index !== currentDoctor.medicine_directions.length - 1) {%>,<%}%>-->
+<!--                                    <%})%>-->
+<!--                            <%}%>-->
+<!--                        </p>-->
                         <%if (currentDoctor.experience) {%>
-                        <p>
-                            Стаж работы: <%=currentDoctor.experience%>
-                        </p>
+                            <p>
+                                Стаж работы: <%=currentDoctor.experience%>
+                            </p>
                         <%}%>
                     </div>
                     <%if(currentDoctor.education.length) {%>
@@ -44,6 +44,14 @@
                 <img data-src="<%=currentDoctor.image%>"
                      src="" alt="<%=`${currentDoctor.name ?? ""} ${currentDoctor.middle_name ?? ""} ${currentDoctor.surname ?? ""}`%>"
                 >
+                <div class="doctor_post_color">
+                <%if (currentDoctor.medicine_directions.length){%>
+                    <%currentDoctor.medicine_directions.forEach((direction, index) => {%>
+<!--                        <%if (index === 0) {%><div class="doctor_post_color" style="background-color: <%=direction.color%>"><%=direction.doctorDirectionName%><%} else {%><%=direction.doctorDirectionName.charAt(0).toLowerCase() + direction.doctorDirectionName.slice(1)%><%}%><% if(index !== currentDoctor.medicine_directions.length - 1) {%>,<%} else {%></div><%}%>-->
+                            <div class="doctor_post_color_item" style="background-color: <%=direction.color%>"><%=direction.doctorDirectionName%></div>
+                    <%})%>
+                <%}%>
+                </div>
             </div>
         </div>
     </div>

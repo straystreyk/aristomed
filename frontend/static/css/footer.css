@@ -38,10 +38,13 @@ footer {
     padding-top: 50px;
     padding-left: 120px;
     color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
 .footer_contacts {
     display: flex;
+    margin-bottom: 25px;
 }
 
 .footer_contacts__tels .tel {
@@ -80,7 +83,7 @@ footer {
 }
 
 .copyright {
-    margin-top: 50px;
+    margin-top: auto;
     text-align: right;
     font-weight: 600;
 }

@@ -15,11 +15,33 @@ const MedicineDirectionSchema = new Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: false,
+  },
+  descriptionReasons: {
+    type: String,
+    required: false,
+  },
+  slogan: {
+    type: String,
+    required: false,
+  },
   color: {
     type: String,
+    required: false,
   },
   hoverColor: {
     type: String,
+    required: false,
+  },
+  image: {
+    type: String,
+    required: false,
+  },
+  reasons: {
+    type: [String],
+    required: false,
   },
 });
 
